@@ -105,69 +105,69 @@ defer db.Close()
 </div>
 <h2>Index</h2>
 <ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#Batch">type Batch</a><br><ul>
-<li><a href="#MakeBatch">func MakeBatch</a></li>
-<li><a href="#Batch.Delete">func (*Batch) Delete</a></li>
-<li><a href="#Batch.Dump">func (*Batch) Dump</a></li>
-<li><a href="#Batch.Len">func (*Batch) Len</a></li>
-<li><a href="#Batch.Load">func (*Batch) Load</a></li>
-<li><a href="#Batch.Put">func (*Batch) Put</a></li>
-<li><a href="#Batch.Replay">func (*Batch) Replay</a></li>
-<li><a href="#Batch.Reset">func (*Batch) Reset</a></li>
+<li><a href="#MakeBatch">	func MakeBatch(n int) *Batch</a></li>
+<li><a href="#Batch.Delete">	func (b *Batch) Delete(key []byte)</a></li>
+<li><a href="#Batch.Dump">	func (b *Batch) Dump() []byte</a></li>
+<li><a href="#Batch.Len">	func (b *Batch) Len() int</a></li>
+<li><a href="#Batch.Load">	func (b *Batch) Load(data []byte) error</a></li>
+<li><a href="#Batch.Put">	func (b *Batch) Put(key, value []byte)</a></li>
+<li><a href="#Batch.Replay">	func (b *Batch) Replay(r BatchReplay) error</a></li>
+<li><a href="#Batch.Reset">	func (b *Batch) Reset()</a></li>
 </ul></li>
 <li><a href="#BatchReplay">type BatchReplay</a><br><ul>
 </ul></li>
 <li><a href="#DB">type DB</a><br><ul>
-<li><a href="#Open">func Open</a></li>
-<li><a href="#OpenFile">func OpenFile</a></li>
-<li><a href="#Recover">func Recover</a></li>
-<li><a href="#RecoverFile">func RecoverFile</a></li>
-<li><a href="#DB.Close">func (*DB) Close</a></li>
-<li><a href="#DB.CompactRange">func (*DB) CompactRange</a></li>
-<li><a href="#DB.Delete">func (*DB) Delete</a></li>
-<li><a href="#DB.Get">func (*DB) Get</a></li>
-<li><a href="#DB.GetProperty">func (*DB) GetProperty</a></li>
-<li><a href="#DB.GetSnapshot">func (*DB) GetSnapshot</a></li>
-<li><a href="#DB.Has">func (*DB) Has</a></li>
-<li><a href="#DB.NewIterator">func (*DB) NewIterator</a></li>
-<li><a href="#DB.OpenTransaction">func (*DB) OpenTransaction</a></li>
-<li><a href="#DB.Put">func (*DB) Put</a></li>
-<li><a href="#DB.SetReadOnly">func (*DB) SetReadOnly</a></li>
-<li><a href="#DB.SizeOf">func (*DB) SizeOf</a></li>
-<li><a href="#DB.Stats">func (*DB) Stats</a></li>
-<li><a href="#DB.Write">func (*DB) Write</a></li>
+<li><a href="#Open">	func Open(stor storage.Storage, o *opt.Options) (db *DB, err error)</a></li>
+<li><a href="#OpenFile">	func OpenFile(path string, o *opt.Options) (db *DB, err error)</a></li>
+<li><a href="#Recover">	func Recover(stor storage.Storage, o *opt.Options) (db *DB, err error)</a></li>
+<li><a href="#RecoverFile">	func RecoverFile(path string, o *opt.Options) (db *DB, err error)</a></li>
+<li><a href="#DB.Close">	func (db *DB) Close() error</a></li>
+<li><a href="#DB.CompactRange">	func (db *DB) CompactRange(r util.Range) error</a></li>
+<li><a href="#DB.Delete">	func (db *DB) Delete(key []byte, wo *opt.WriteOptions) error</a></li>
+<li><a href="#DB.Get">	func (db *DB) Get(key []byte, ro *opt.ReadOptions) (value []byte, err error)</a></li>
+<li><a href="#DB.GetProperty">	func (db *DB) GetProperty(name string) (value string, err error)</a></li>
+<li><a href="#DB.GetSnapshot">	func (db *DB) GetSnapshot() (*Snapshot, error)</a></li>
+<li><a href="#DB.Has">	func (db *DB) Has(key []byte, ro *opt.ReadOptions) (ret bool, err error)</a></li>
+<li><a href="#DB.NewIterator">	func (db *DB) NewIterator(slice *util.Range, ro *opt.ReadOptions) iterator.Iterator</a></li>
+<li><a href="#DB.OpenTransaction">	func (db *DB) OpenTransaction() (*Transaction, error)</a></li>
+<li><a href="#DB.Put">	func (db *DB) Put(key, value []byte, wo *opt.WriteOptions) error</a></li>
+<li><a href="#DB.SetReadOnly">	func (db *DB) SetReadOnly() error</a></li>
+<li><a href="#DB.SizeOf">	func (db *DB) SizeOf(ranges []util.Range) (Sizes, error)</a></li>
+<li><a href="#DB.Stats">	func (db *DB) Stats(s *DBStats) error</a></li>
+<li><a href="#DB.Write">	func (db *DB) Write(batch *Batch, wo *opt.WriteOptions) error</a></li>
 </ul></li>
 <li><a href="#DBStats">type DBStats</a><br><ul>
 </ul></li>
 <li><a href="#ErrBatchCorrupted">type ErrBatchCorrupted</a><br><ul>
-<li><a href="#ErrBatchCorrupted.Error">func (*ErrBatchCorrupted) Error</a></li>
+<li><a href="#ErrBatchCorrupted.Error">	func (e *ErrBatchCorrupted) Error() string</a></li>
 </ul></li>
 <li><a href="#ErrInternalKeyCorrupted">type ErrInternalKeyCorrupted</a><br><ul>
-<li><a href="#ErrInternalKeyCorrupted.Error">func (*ErrInternalKeyCorrupted) Error</a></li>
+<li><a href="#ErrInternalKeyCorrupted.Error">	func (e *ErrInternalKeyCorrupted) Error() string</a></li>
 </ul></li>
 <li><a href="#ErrManifestCorrupted">type ErrManifestCorrupted</a><br><ul>
-<li><a href="#ErrManifestCorrupted.Error">func (*ErrManifestCorrupted) Error</a></li>
+<li><a href="#ErrManifestCorrupted.Error">	func (e *ErrManifestCorrupted) Error() string</a></li>
 </ul></li>
 <li><a href="#Reader">type Reader</a><br><ul>
 </ul></li>
 <li><a href="#Sizes">type Sizes</a><br><ul>
-<li><a href="#Sizes.Sum">func (Sizes) Sum</a></li>
+<li><a href="#Sizes.Sum">	func (sizes Sizes) Sum() int64</a></li>
 </ul></li>
 <li><a href="#Snapshot">type Snapshot</a><br><ul>
-<li><a href="#Snapshot.Get">func (*Snapshot) Get</a></li>
-<li><a href="#Snapshot.Has">func (*Snapshot) Has</a></li>
-<li><a href="#Snapshot.NewIterator">func (*Snapshot) NewIterator</a></li>
-<li><a href="#Snapshot.Release">func (*Snapshot) Release</a></li>
-<li><a href="#Snapshot.String">func (*Snapshot) String</a></li>
+<li><a href="#Snapshot.Get">	func (snap *Snapshot) Get(key []byte, ro *opt.ReadOptions) (value []byte, err error)</a></li>
+<li><a href="#Snapshot.Has">	func (snap *Snapshot) Has(key []byte, ro *opt.ReadOptions) (ret bool, err error)</a></li>
+<li><a href="#Snapshot.NewIterator">	func (snap *Snapshot) NewIterator(slice *util.Range, ro *opt.ReadOptions) iterator.Iterator</a></li>
+<li><a href="#Snapshot.Release">	func (snap *Snapshot) Release()</a></li>
+<li><a href="#Snapshot.String">	func (snap *Snapshot) String() string</a></li>
 </ul></li>
 <li><a href="#Transaction">type Transaction</a><br><ul>
-<li><a href="#Transaction.Commit">func (*Transaction) Commit</a></li>
-<li><a href="#Transaction.Delete">func (*Transaction) Delete</a></li>
-<li><a href="#Transaction.Discard">func (*Transaction) Discard</a></li>
-<li><a href="#Transaction.Get">func (*Transaction) Get</a></li>
-<li><a href="#Transaction.Has">func (*Transaction) Has</a></li>
-<li><a href="#Transaction.NewIterator">func (*Transaction) NewIterator</a></li>
-<li><a href="#Transaction.Put">func (*Transaction) Put</a></li>
-<li><a href="#Transaction.Write">func (*Transaction) Write</a></li>
+<li><a href="#Transaction.Commit">	func (tr *Transaction) Commit() error</a></li>
+<li><a href="#Transaction.Delete">	func (tr *Transaction) Delete(key []byte, wo *opt.WriteOptions) error</a></li>
+<li><a href="#Transaction.Discard">	func (tr *Transaction) Discard()</a></li>
+<li><a href="#Transaction.Get">	func (tr *Transaction) Get(key []byte, ro *opt.ReadOptions) ([]byte, error)</a></li>
+<li><a href="#Transaction.Has">	func (tr *Transaction) Has(key []byte, ro *opt.ReadOptions) (bool, error)</a></li>
+<li><a href="#Transaction.NewIterator">	func (tr *Transaction) NewIterator(slice *util.Range, ro *opt.ReadOptions) iterator.Iterator</a></li>
+<li><a href="#Transaction.Put">	func (tr *Transaction) Put(key, value []byte, wo *opt.WriteOptions) error</a></li>
+<li><a href="#Transaction.Write">	func (tr *Transaction) Write(b *Batch, wo *opt.WriteOptions) error</a></li>
 </ul></li>
 </ul>
 <h2 id="pkg-Variables">Variables</h2>
