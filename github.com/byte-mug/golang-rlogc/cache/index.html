@@ -1,0 +1,142 @@
+---
+layout: godoc
+title: cache
+gopkg: github.com/byte-mug/golang-rlogc/cache
+---
+<h1>Package cache</h1>
+<code>import "github.com/byte-mug/golang-rlogc/cache"</code><h2>Overview</h2>
+<div>
+<p>
+This package implements a fixed-size thread safe *R+log(C)* cache.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Cache">type Cache</a><br><ul>
+<li><a href="#NewCache">	func NewCache(decay float64, timer rlogc.Timer, size int, cb EvictCB) *Cache</a></li>
+<li><a href="#Cache.Add">	func (c *Cache) Add(key, value interface{}) (evicted bool)</a></li>
+<li><a href="#Cache.Contains">	func (c *Cache) Contains(key interface{}) bool</a></li>
+<li><a href="#Cache.ContainsOrAdd">	func (c *Cache) ContainsOrAdd(key, value interface{}) (ok, evicted bool)</a></li>
+<li><a href="#Cache.Get">	func (c *Cache) Get(key interface{}) (value interface{}, ok bool)</a></li>
+<li><a href="#Cache.GetOldest">	func (c *Cache) GetOldest() (key interface{}, value interface{}, ok bool)</a></li>
+<li><a href="#Cache.Len">	func (c *Cache) Len() int</a></li>
+<li><a href="#Cache.Peek">	func (c *Cache) Peek(key interface{}) (value interface{}, ok bool)</a></li>
+<li><a href="#Cache.PeekOrAdd">	func (c *Cache) PeekOrAdd(key, value interface{}) (previous interface{}, ok, evicted bool)</a></li>
+<li><a href="#Cache.Remove">	func (c *Cache) Remove(key interface{}) (present bool)</a></li>
+<li><a href="#Cache.RemoveOldest">	func (c *Cache) RemoveOldest() (key interface{}, value interface{}, ok bool)</a></li>
+<li><a href="#Cache.Resize">	func (c *Cache) Resize(size int) (evicted int)</a></li>
+</ul></li>
+<li><a href="#EvictCB">type EvictCB</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="Cache">type Cache</h2>
+<div>
+<pre>type Cache struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewCache">func NewCache</h2>
+<div>
+<pre>func NewCache(decay float64, timer rlogc.Timer, size int, cb EvictCB) *Cache
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Cache.Add">func (*Cache) Add</h2>
+<div>
+<pre>func (c *Cache) Add(key, value interface{}) (evicted bool)
+</pre>
+<p>
+Adds or replaces a cache entry.
+</p>
+</div>
+<h2 id="Cache.Contains">func (*Cache) Contains</h2>
+<div>
+<pre>func (c *Cache) Contains(key interface{}) bool
+</pre>
+<p>
+Looks up a cache entry without updating the cache statistics and witout returning it&#39;s value.
+</p>
+</div>
+<h2 id="Cache.ContainsOrAdd">func (*Cache) ContainsOrAdd</h2>
+<div>
+<pre>func (c *Cache) ContainsOrAdd(key, value interface{}) (ok, evicted bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Cache.Get">func (*Cache) Get</h2>
+<div>
+<pre>func (c *Cache) Get(key interface{}) (value interface{}, ok bool)
+</pre>
+<p>
+Looks up a cache entry.
+</p>
+</div>
+<h2 id="Cache.GetOldest">func (*Cache) GetOldest</h2>
+<div>
+<pre>func (c *Cache) GetOldest() (key interface{}, value interface{}, ok bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Cache.Len">func (*Cache) Len</h2>
+<div>
+<pre>func (c *Cache) Len() int
+</pre>
+<p>
+Returns the number of entries.
+</p>
+</div>
+<h2 id="Cache.Peek">func (*Cache) Peek</h2>
+<div>
+<pre>func (c *Cache) Peek(key interface{}) (value interface{}, ok bool)
+</pre>
+<p>
+Looks up a cache entry without updating the cache statistics.
+</p>
+</div>
+<h2 id="Cache.PeekOrAdd">func (*Cache) PeekOrAdd</h2>
+<div>
+<pre>func (c *Cache) PeekOrAdd(key, value interface{}) (previous interface{}, ok, evicted bool)
+</pre>
+<p>
+Looks up a cache entry without updating the cache statistics and adds a new entry, if no cache entry was found.
+</p>
+</div>
+<h2 id="Cache.Remove">func (*Cache) Remove</h2>
+<div>
+<pre>func (c *Cache) Remove(key interface{}) (present bool)
+</pre>
+<p>
+Removes a specific cache entry.
+</p>
+</div>
+<h2 id="Cache.RemoveOldest">func (*Cache) RemoveOldest</h2>
+<div>
+<pre>func (c *Cache) RemoveOldest() (key interface{}, value interface{}, ok bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Cache.Resize">func (*Cache) Resize</h2>
+<div>
+<pre>func (c *Cache) Resize(size int) (evicted int)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="EvictCB">type EvictCB</h2>
+<div>
+<pre>type EvictCB func(key, value interface{})
+</pre>
+<p>
+EvictCB is used to get a callback when a cache entry is evicted.
+</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "github.com/byte-mug/golang-rlogc/rlogc"</code></li><li><code>import "sync"</code></li><li><code>import "unsafe"</code></li></ul>
+
+{% include_relative list.html %}

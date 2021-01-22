@@ -1,0 +1,248 @@
+---
+layout: godoc
+title: rlogc
+gopkg: github.com/byte-mug/golang-rlogc/rlogc
+---
+<h1>Package rlogc</h1>
+<code>import "github.com/byte-mug/golang-rlogc/rlogc"</code><h2>Overview</h2>
+<div>
+<p>
+A simple, non-synchronized RlogC implementation.
+</p>
+<p>
+A simple, non-synchronized RlogC implementation.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#F">	func F(n float64) float64</a></li>
+<li><a href="#GetDecayFromHalfLife">	func GetDecayFromHalfLife(HL int64) float64</a></li>
+<li><a href="#Element">type Element</a><br><ul>
+<li><a href="#Element.Evict">	func (e *Element) Evict()</a></li>
+<li><a href="#Element.Promote">	func (e *Element) Promote()</a></li>
+</ul></li>
+<li><a href="#HC">type HC</a><br><ul>
+<li><a href="#HC.Access">	func (hc *HC) Access(now int64, decay float64)</a></li>
+<li><a href="#HC.Compare">	func (a *HC) Compare(b *HC, decay float64) int</a></li>
+<li><a href="#HC.Enter">	func (hc *HC) Enter(now int64, decay float64)</a></li>
+</ul></li>
+<li><a href="#RlogcHeap">type RlogcHeap</a><br><ul>
+<li><a href="#RlogcHeap.BorrowElements">	func (r *RlogcHeap) BorrowElements() []*Element</a></li>
+<li><a href="#RlogcHeap.Enter">	func (r *RlogcHeap) Enter(e *Element)</a></li>
+<li><a href="#RlogcHeap.EvictNode">	func (r *RlogcHeap) EvictNode() (e *Element)</a></li>
+<li><a href="#RlogcHeap.Len">	func (r *RlogcHeap) Len() int</a></li>
+<li><a href="#RlogcHeap.StealElements">	func (r *RlogcHeap) StealElements() []*Element</a></li>
+</ul></li>
+<li><a href="#Timer">type Timer</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="F">func F</h2>
+<div>
+<pre>func F(n float64) float64
+</pre>
+<p>
+This function increments n logarithmically.
+</p>
+<p>
+This function computes (in a mathematical sense):
+</p>
+<pre>f(n) = log(exp(n)+1)
+</pre>
+<p>
+However, to prevent floating point overflows, this function, its implementation
+exploits the following rule:
+</p>
+<pre>f(n) = n + f(-n)
+</pre>
+<p>
+Which can be proven as follows:
+</p>
+<pre>f(n) = log(exp(n)+1)
+f(n) = log(exp(n)+exp(0))
+f(n) = log(exp(n-n)+exp(0-n))+n
+f(n) = log(exp(0)+exp(-n))+n
+f(n) = log(1+exp(-n))+n
+f(n) = n + log(exp(-n)+1)
+f(n) = n + f(-n)
+</pre>
+<p>
+The function is implemented as
+</p>
+<pre>f(n) = max(0,n) + log(exp(-abs(n))+1)
+</pre>
+<p>
+Which is correct because:
+</p>
+<pre>max(0,n) = 0 IF n&lt;0
+-abs(n)  = n IF n&lt;0
+
+max(0,n) = n IF n&gt;0
+-abs(n) = -n IF n&gt;0
+
+max(0,n) = -abs(n) = 0 IF n = 0
+</pre>
+</div>
+<h2 id="GetDecayFromHalfLife">func GetDecayFromHalfLife</h2>
+<div>
+<pre>func GetDecayFromHalfLife(HL int64) float64
+</pre>
+<p>
+Calculates the decay value for a given Half-life time.
+</p>
+<p>
+Half-life (symbol t½) is the time required for a quantity to reduce to half of
+its initial value. See also: <a href="https://en.wikipedia.org/wiki/Half-life">https://en.wikipedia.org/wiki/Half-life</a>
+</p>
+<p>
+The time unit of HL is the same as the time unit of the Timer in use.
+</p>
+<p>
+For example, if you want to have a Half-life time of one hour, and your Timer
+increments once every second - thus the time unit of your Timer is one second
+- you must specify the number of seconds of this hour: 3600. However, if your
+Timer&#39;s time unit is one millisecond, you must specify the number of
+milliseconds within an hour (3600000) in order to get a Half-life time of one
+hour.
+</p>
+</div>
+<h2 id="Element">type Element</h2>
+<div>
+<pre>	type Element struct {
+		UserData [2]unsafe.Pointer
+		// contains filtered or unexported fields
+	}
+ Cache-Element.
+</pre>
+</div>
+<h2 id="Element.Evict">func (*Element) Evict</h2>
+<div>
+<pre>func (e *Element) Evict()
+</pre>
+<p>
+Evicts the node from the RlogcHeap containing it.
+</p>
+</div>
+<h2 id="Element.Promote">func (*Element) Promote</h2>
+<div>
+<pre>func (e *Element) Promote()
+</pre>
+<p>
+A cache-hit on this element.
+</p>
+</div>
+<h2 id="HC">type HC</h2>
+<div>
+<pre>type HC struct {
+	LogC	float64
+	Time	int64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HC.Access">func (*HC) Access</h2>
+<div>
+<pre>func (hc *HC) Access(now int64, decay float64)
+</pre>
+<p>
+Decays the counter and increments it.
+</p>
+<p>
+If the decay factor is 0.9, then:
+</p>
+<pre>decay = log(0.9)
+</pre>
+</div>
+<h2 id="HC.Compare">func (*HC) Compare</h2>
+<div>
+<pre>func (a *HC) Compare(b *HC, decay float64) int
+</pre>
+<p>
+Compares a and b and returns:
+</p>
+<pre>1  if a&gt;b
+-1 if a&lt;b
+0  otherwise
+</pre>
+<p>
+If the decay factor is 0.9, then:
+</p>
+<pre>decay = log(0.9)
+</pre>
+</div>
+<h2 id="HC.Enter">func (*HC) Enter</h2>
+<div>
+<pre>func (hc *HC) Enter(now int64, decay float64)
+</pre>
+<p>
+Initializes the counter LogC = log(1) and the Time = now.
+Called, when an entry enters the cache.
+</p>
+<p>
+If the decay factor is 0.9, then:
+</p>
+<pre>decay = log(0.9)
+</pre>
+</div>
+<h2 id="RlogcHeap">type RlogcHeap</h2>
+<div>
+<pre>type RlogcHeap struct {
+	Decay	float64
+	Timer	Timer
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RlogcHeap.BorrowElements">func (*RlogcHeap) BorrowElements</h2>
+<div>
+<pre>func (r *RlogcHeap) BorrowElements() []*Element
+</pre>
+<p>
+Borrows the priority queue. DANGEROUS! Handle with care!
+</p>
+</div>
+<h2 id="RlogcHeap.Enter">func (*RlogcHeap) Enter</h2>
+<div>
+<pre>func (r *RlogcHeap) Enter(e *Element)
+</pre>
+<p>
+Enters a node to the heap.
+</p>
+</div>
+<h2 id="RlogcHeap.EvictNode">func (*RlogcHeap) EvictNode</h2>
+<div>
+<pre>func (r *RlogcHeap) EvictNode() (e *Element)
+</pre>
+<p>
+Evicts the least recently/frequently used element and returns it.
+</p>
+</div>
+<h2 id="RlogcHeap.Len">func (*RlogcHeap) Len</h2>
+<div>
+<pre>func (r *RlogcHeap) Len() int
+</pre>
+<p>
+Returns the number of elements on the heap.
+</p>
+</div>
+<h2 id="RlogcHeap.StealElements">func (*RlogcHeap) StealElements</h2>
+<div>
+<pre>func (r *RlogcHeap) StealElements() []*Element
+</pre>
+<p>
+Borrows the priority queue. DANGEROUS! Handle with care!
+</p>
+</div>
+<h2 id="Timer">type Timer</h2>
+<div>
+<pre>type Timer func() int64
+</pre>
+<p>
+A function that returns a monotinically increasing 64-bit integer.
+</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "container/heap"</code></li><li><code>import "math"</code></li><li><code>import "unsafe"</code></li></ul>
+
+{% include_relative list.html %}

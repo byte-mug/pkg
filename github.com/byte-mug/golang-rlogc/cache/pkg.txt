@@ -1,0 +1,1 @@
+This package implements a fixed-size thread safe *R+log(C)* cache.

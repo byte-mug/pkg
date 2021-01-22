@@ -1,0 +1,58 @@
+---
+layout: godoc
+title: timer
+gopkg: github.com/byte-mug/golang-rlogc/timer
+---
+<h1>Package timer</h1>
+<code>import "github.com/byte-mug/golang-rlogc/timer"</code><h2>Overview</h2>
+<div>
+<p>
+Timer implementations for RlogC
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Increment">	func Increment() rlogc.Timer</a></li>
+<li><a href="#Interval">	func Interval(d time.Duration) rlogc.Timer</a></li>
+<li><a href="#Seconds">	func Seconds() rlogc.Timer</a></li>
+</ul>
+<h2 id="Increment">func Increment</h2>
+<div>
+<pre>func Increment() rlogc.Timer
+</pre>
+<p>
+A pseudo-timer, that increases every time it is called.
+</p>
+</div>
+<h2 id="Interval">func Interval</h2>
+<div>
+<pre>func Interval(d time.Duration) rlogc.Timer
+</pre>
+<p>
+A monotonic timer that increases in a given interval.
+</p>
+<p>
+Calls to this function are cheap, because it only fetches a field of a struct
+that is incremented by a goroutine, that runs in background.
+</p>
+<p>
+WARNING: this function creates a goroutine, that won&#39;t stop!
+Do only call this a bounded number of times!
+</p>
+</div>
+<h2 id="Seconds">func Seconds</h2>
+<div>
+<pre>func Seconds() rlogc.Timer
+</pre>
+<p>
+A monotonic timer, that increases once every second.
+</p>
+<p>
+Calls to this function are somewhat expensive, because this function calls
+</p>
+<pre>time.Now().Unix()
+</pre>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "github.com/byte-mug/golang-rlogc/rlogc"</code></li><li><code>import "time"</code></li></ul>
+
+{% include_relative list.html %}
