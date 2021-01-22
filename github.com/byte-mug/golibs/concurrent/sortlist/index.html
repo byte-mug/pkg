@@ -1,0 +1,119 @@
+---
+layout: godoc
+title: sortlist
+gopkg: github.com/byte-mug/golibs/concurrent/sortlist
+---
+<h1>Package sortlist</h1>
+<code>import "github.com/byte-mug/golibs/concurrent/sortlist"</code><h2>Overview</h2>
+<div>
+<p>
+Yet another Concurrent Skiplist implementation. Changes are performed using
+atomic CAS operations. Inserts acquire a shared lock and Writes acquire an
+exclusive lock. All locking is done internally.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Node">type Node</a><br><ul>
+<li><a href="#Node.Next">	func (n *Node) Next() *Node</a></li>
+<li><a href="#Node.String">	func (n *Node) String() string</a></li>
+</ul></li>
+<li><a href="#Sortlist">type Sortlist</a><br><ul>
+<li><a href="#Sortlist.Ceil">	func (s *Sortlist) Ceil(sk interface{}) *Node</a></li>
+<li><a href="#Sortlist.Delete">	func (s *Sortlist) Delete(k interface{}) *Node</a></li>
+<li><a href="#Sortlist.Floor">	func (s *Sortlist) Floor(sk interface{}) *Node</a></li>
+<li><a href="#Sortlist.Insert">	func (s *Sortlist) Insert(k, v interface{})</a></li>
+<li><a href="#Sortlist.Lookup">	func (s *Sortlist) Lookup(sk interface{}) *Node</a></li>
+<li><a href="#Sortlist.Next">	func (s *Sortlist) Next(sk interface{}) *Node</a></li>
+<li><a href="#Sortlist.Previous">	func (s *Sortlist) Previous(sk interface{}) *Node</a></li>
+</ul></li>
+</ul>
+<h2 id="Node">type Node</h2>
+<div>
+<pre>type Node struct {
+	Key	interface{}
+	Value	interface{}
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Node.Next">func (*Node) Next</h2>
+<div>
+<pre>func (n *Node) Next() *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Node.String">func (*Node) String</h2>
+<div>
+<pre>func (n *Node) String() string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist">type Sortlist</h2>
+<div>
+<pre>type Sortlist struct {
+	Cmp	utils.Comparator	// Required.
+	Src	rand.Source		// Optional.
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Ceil">func (*Sortlist) Ceil</h2>
+<div>
+<pre>func (s *Sortlist) Ceil(sk interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Delete">func (*Sortlist) Delete</h2>
+<div>
+<pre>func (s *Sortlist) Delete(k interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Floor">func (*Sortlist) Floor</h2>
+<div>
+<pre>func (s *Sortlist) Floor(sk interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Insert">func (*Sortlist) Insert</h2>
+<div>
+<pre>func (s *Sortlist) Insert(k, v interface{})
+</pre>
+<p>
+This function should really be called Put()!
+</p>
+</div>
+<h2 id="Sortlist.Lookup">func (*Sortlist) Lookup</h2>
+<div>
+<pre>func (s *Sortlist) Lookup(sk interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Next">func (*Sortlist) Next</h2>
+<div>
+<pre>func (s *Sortlist) Next(sk interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Sortlist.Previous">func (*Sortlist) Previous</h2>
+<div>
+<pre>func (s *Sortlist) Previous(sk interface{}) *Node
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/emirpasic/gods/utils"</code></li><li><code>import "math/rand"</code></li><li><code>import "sync"</code></li><li><code>import "sync/atomic"</code></li><li><code>import "unsafe"</code></li></ul>
+
+{% include_relative list.html %}

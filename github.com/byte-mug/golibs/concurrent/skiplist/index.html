@@ -1,10 +1,10 @@
 ---
 layout: godoc
 title: skiplist
-gopkg: github.com/byte-mug/golibs/skiplist
+gopkg: github.com/byte-mug/golibs/concurrent/skiplist
 ---
 <h1>Package skiplist</h1>
-<code>import "github.com/byte-mug/golibs/skiplist"</code><h2>Overview</h2>
+<code>import "github.com/byte-mug/golibs/concurrent/skiplist"</code><h2>Overview</h2>
 <div>
 <p>
 Skip List implement in Go.
@@ -14,9 +14,14 @@ A Skip List is a data structure that allows fast search within an ordered
 sequence of elements. Fast search is made possible by maintaining a linked
 hierarchy of subsequences, each skipping over fewer elements.
 </p>
+<p>
+This Implementation is Partially Concurrent: It supports a single writer
+and multiple concurrent readers. Readers can access the Skiplist without
+locking.
+</p>
 </div>
 <h2>Index</h2>
-<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#Skiplist">type Skiplist</a><br><ul>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#pkg-Variables">Variables</a></li><li><a href="#Skiplist">type Skiplist</a><br><ul>
 <li><a href="#NewSkipList">	func NewSkipList(comparator utils.Comparator) *Skiplist</a></li>
 <li><a href="#Skiplist.Delete">	func (b *Skiplist) Delete(searchKey interface{}) error</a></li>
 <li><a href="#Skiplist.DisplayAll">	func (b *Skiplist) DisplayAll()</a></li>
@@ -34,7 +39,16 @@ hierarchy of subsequences, each skipping over fewer elements.
 <div>
 <pre>const (
 	DefaultMaxLevel		int	= 15	//Maximal level allow to create in this skip list
-	DefaultPropobility	float32	= 0.25	//Default propobility
+	DefaultPropability	float32	= 0.25	//Default Propability
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var (
+	ErrNotFound = errors.New(&#34;Not found.&#34;)
 )
 </pre>
 <p>
@@ -47,7 +61,7 @@ hierarchy of subsequences, each skipping over fewer elements.
 
 	// List configuration
 	MaxLevel	int
-	Propobility	float32
+	Propability	float32
 
 	// List Comparison
 	Comparator	utils.Comparator
@@ -121,7 +135,7 @@ Change SkipList default maxlevel is 4.
 <pre>type Skipnode struct {
 	Key	interface{}
 	Val	interface{}
-	Forward	[]*Skipnode
+
 	Level	int
 	// contains filtered or unexported fields
 }
@@ -144,6 +158,6 @@ Change SkipList default maxlevel is 4.
 -</p>
 </div>
 <h2>Dependencies</h2><ul>
-<li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/emirpasic/gods/utils"</code></li><li><code>import "math/rand"</code></li><li><code>import "time"</code></li></ul>
+<li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/emirpasic/gods/utils"</code></li><li><code>import "math/rand"</code></li><li><code>import "sync/atomic"</code></li><li><code>import "time"</code></li><li><code>import "unsafe"</code></li></ul>
 
 {% include_relative list.html %}
