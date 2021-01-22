@@ -1,0 +1,84 @@
+---
+layout: godoc
+title: goconfig
+gopkg: github.com/byte-mug/goconfig
+---
+<h1>Package goconfig</h1>
+<code>import "github.com/byte-mug/goconfig"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#Parse">	func Parse(b []byte, ch ContentHandler) error</a></li>
+<li><a href="#ContentHandler">type ContentHandler</a><br><ul>
+<li><a href="#CreateReflectHandler">	func CreateReflectHandler(i interface{}) ContentHandler</a></li>
+<li><a href="#DefaultContentHandler">	func DefaultContentHandler() ContentHandler</a></li>
+</ul></li>
+<li><a href="#DeComment">type DeComment</a><br><ul>
+<li><a href="#DeComment.OfBytes">	func (d DeComment) OfBytes(s []byte) []byte</a></li>
+<li><a href="#DeComment.OfString">	func (d DeComment) OfString(s string) string</a></li>
+</ul></li>
+</ul>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>	var EReflectDecodeValueError = errors.New(&#34;EReflectDecodeValueError&#34;)
+ Internal use only.
+</pre>
+</div>
+<h2 id="Parse">func Parse</h2>
+<div>
+<pre>func Parse(b []byte, ch ContentHandler) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ContentHandler">type ContentHandler</h2>
+<div>
+<pre>type ContentHandler interface {
+	StartElement(clazz, word []byte) ContentHandler
+	EndElement()
+	KeyValuePair(key, value []byte)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CreateReflectHandler">func CreateReflectHandler</h2>
+<div>
+<pre>func CreateReflectHandler(i interface{}) ContentHandler
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DefaultContentHandler">func DefaultContentHandler</h2>
+<div>
+<pre>func DefaultContentHandler() ContentHandler
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DeComment">type DeComment</h2>
+<div>
+<pre>	type DeComment struct{}
+ * This type exists, to test the string removal function.
+ * Do not use this type or it&#39;s methods to pre-process the input for the parser,
+ * because, the parser does this on its own.
+</pre>
+</div>
+<h2 id="DeComment.OfBytes">func (DeComment) OfBytes</h2>
+<div>
+<pre>func (d DeComment) OfBytes(s []byte) []byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DeComment.OfString">func (DeComment) OfString</h2>
+<div>
+<pre>func (d DeComment) OfString(s string) string
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding"</code></li><li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "reflect"</code></li><li><code>import "regexp"</code></li><li><code>import "strconv"</code></li><li><code>import "strings"</code></li></ul>
+
+{% include_relative list.html %}
