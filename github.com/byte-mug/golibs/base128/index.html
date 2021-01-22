@@ -1,0 +1,57 @@
+---
+layout: godoc
+title: base128
+gopkg: github.com/byte-mug/golibs/base128
+---
+<h1>Package base128</h1>
+<code>import "github.com/byte-mug/golibs/base128"</code><h2>Overview</h2>
+<div>
+<p>
+A streaming interface to a Base128-Encoding
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Reader">type Reader</a><br><ul>
+<li><a href="#NewReader">	func NewReader(r io.Reader) Reader</a></li>
+</ul></li>
+<li><a href="#Writer">type Writer</a><br><ul>
+<li><a href="#NewWriter">	func NewWriter(w io.Writer) Writer</a></li>
+</ul></li>
+</ul>
+<h2 id="Reader">type Reader</h2>
+<div>
+<pre>type Reader interface {
+	io.Reader
+	Reset(r io.Reader)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewReader">func NewReader</h2>
+<div>
+<pre>func NewReader(r io.Reader) Reader
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Writer">type Writer</h2>
+<div>
+<pre>type Writer interface {
+	io.WriteCloser
+	Reset(w io.Writer)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewWriter">func NewWriter</h2>
+<div>
+<pre>func NewWriter(w io.Writer) Writer
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bufio"</code></li><li><code>import "io"</code></li>
+{% include_relative list.html %}

@@ -1,0 +1,144 @@
+---
+layout: godoc
+title: versionvector
+gopkg: github.com/byte-mug/golibs/versionvector
+---
+<h1>Package versionvector</h1>
+<code>import "github.com/byte-mug/golibs/versionvector"</code><h2>Overview</h2>
+<div>
+<p>
+An implementation of the Version vector technique for distributed systems.
+</p>
+<h3 id="hdr-Basics">Basics</h3>
+<p>
+A Version vector is a set of key value pairs, where the key IDENTIFIES the Node
+modifying the data item, and the value is the version. If a key value-pair with
+a given key does not exist, 0 is the default value.
+</p>
+<h3 id="hdr-Requirements">Requirements</h3>
+<p>
+Two Nodes MUST NOT have the same key and the key SHOULD NOT change over the
+lifetime of the Node.
+</p>
+<h3 id="hdr-Caveats">Caveats</h3>
+<p>
+The algorithm is capable to detect Conflicts but it is not capable to resolve
+conflicts that occured.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Comparison">type Comparison</a><br><ul>
+<li><a href="#GetComparison">	func GetComparison(lower, higher bool) Comparison</a></li>
+<li><a href="#Comparison.AsInt">	func (c Comparison) AsInt() int</a></li>
+<li><a href="#Comparison.Conflict">	func (c Comparison) Conflict() bool</a></li>
+<li><a href="#Comparison.Higher">	func (c Comparison) Higher() bool</a></li>
+<li><a href="#Comparison.Lower">	func (c Comparison) Lower() bool</a></li>
+<li><a href="#Comparison.String">	func (c Comparison) String() string</a></li>
+</ul></li>
+<li><a href="#IntVector">type IntVector</a><br><ul>
+<li><a href="#IntVector.Compare">	func (v IntVector) Compare(other IntVector) Comparison</a></li>
+<li><a href="#IntVector.Increment">	func (v IntVector) Increment(node uint64) IntVector</a></li>
+</ul></li>
+<li><a href="#Vector">type Vector</a><br><ul>
+<li><a href="#Vector.Clone">	func (v Vector) Clone() Vector</a></li>
+<li><a href="#Vector.Compare">	func (v Vector) Compare(other Vector) Comparison</a></li>
+<li><a href="#Vector.Increment">	func (v Vector) Increment(node string)</a></li>
+</ul></li>
+</ul>
+<h2 id="Comparison">type Comparison</h2>
+<div>
+<pre>type Comparison uint
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GetComparison">func GetComparison</h2>
+<div>
+<pre>func GetComparison(lower, higher bool) Comparison
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Comparison.AsInt">func (Comparison) AsInt</h2>
+<div>
+<pre>func (c Comparison) AsInt() int
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Comparison.Conflict">func (Comparison) Conflict</h2>
+<div>
+<pre>func (c Comparison) Conflict() bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Comparison.Higher">func (Comparison) Higher</h2>
+<div>
+<pre>func (c Comparison) Higher() bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Comparison.Lower">func (Comparison) Lower</h2>
+<div>
+<pre>func (c Comparison) Lower() bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Comparison.String">func (Comparison) String</h2>
+<div>
+<pre>func (c Comparison) String() string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="IntVector">type IntVector</h2>
+<div>
+<pre>	type IntVector []uint64
+ A Version vector with integers as node-IDs.
+</pre>
+</div>
+<h2 id="IntVector.Compare">func (IntVector) Compare</h2>
+<div>
+<pre>func (v IntVector) Compare(other IntVector) Comparison
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="IntVector.Increment">func (IntVector) Increment</h2>
+<div>
+<pre>	func (v IntVector) Increment(node uint64) IntVector
+ Increments the node&#39;s version and returns the new vector.
+</pre>
+</div>
+<h2 id="Vector">type Vector</h2>
+<div>
+<pre>	type Vector map[string]uint64
+ A Version vector with strings as node-IDs.
+</pre>
+</div>
+<h2 id="Vector.Clone">func (Vector) Clone</h2>
+<div>
+<pre>func (v Vector) Clone() Vector
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Vector.Compare">func (Vector) Compare</h2>
+<div>
+<pre>func (v Vector) Compare(other Vector) Comparison
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Vector.Increment">func (Vector) Increment</h2>
+<div>
+<pre>func (v Vector) Increment(node string)
+</pre>
+<p>
+-</p>
+</div>
+
+{% include_relative list.html %}

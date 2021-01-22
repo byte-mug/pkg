@@ -1,0 +1,97 @@
+---
+layout: godoc
+title: reslink
+gopkg: github.com/byte-mug/golibs/reslink
+---
+<h1>Package reslink</h1>
+<code>import "github.com/byte-mug/golibs/reslink"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Resource">type Resource</a><br><ul>
+</ul></li>
+<li><a href="#ResourceElement">type ResourceElement</a><br><ul>
+<li><a href="#NewResourceElement">	func NewResourceElement(res Resource) *ResourceElement</a></li>
+<li><a href="#ResourceElement.Decr">	func (r *ResourceElement) Decr()</a></li>
+<li><a href="#ResourceElement.Incr">	func (r *ResourceElement) Incr()</a></li>
+</ul></li>
+<li><a href="#ResourceList">type ResourceList</a><br><ul>
+<li><a href="#NewResourceList">	func NewResourceList(max int) *ResourceList</a></li>
+<li><a href="#ResourceList.Disable">	func (r *ResourceList) Disable(re *ResourceElement)</a></li>
+<li><a href="#ResourceList.Open">	func (r *ResourceList) Open(re *ResourceElement) error</a></li>
+</ul></li>
+</ul>
+<h2 id="Resource">type Resource</h2>
+<div>
+<pre>type Resource interface {
+	Open() error
+	Close() error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ResourceElement">type ResourceElement</h2>
+<div>
+<pre>type ResourceElement struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewResourceElement">func NewResourceElement</h2>
+<div>
+<pre>func NewResourceElement(res Resource) *ResourceElement
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ResourceElement.Decr">func (*ResourceElement) Decr</h2>
+<div>
+<pre>func (r *ResourceElement) Decr()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ResourceElement.Incr">func (*ResourceElement) Incr</h2>
+<div>
+<pre>func (r *ResourceElement) Incr()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ResourceList">type ResourceList</h2>
+<div>
+<pre>type ResourceList struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewResourceList">func NewResourceList</h2>
+<div>
+<pre>func NewResourceList(max int) *ResourceList
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ResourceList.Disable">func (*ResourceList) Disable</h2>
+<div>
+<pre>func (r *ResourceList) Disable(re *ResourceElement)
+</pre>
+<p>
+Permanently disables re
+</p>
+</div>
+<h2 id="ResourceList.Open">func (*ResourceList) Open</h2>
+<div>
+<pre>func (r *ResourceList) Open(re *ResourceElement) error
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "container/list"</code></li><li><code>import "sync"</code></li><li><code>import "sync/atomic"</code></li>
+{% include_relative list.html %}

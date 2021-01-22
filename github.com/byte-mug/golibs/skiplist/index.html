@@ -1,0 +1,148 @@
+---
+layout: godoc
+title: skiplist
+gopkg: github.com/byte-mug/golibs/skiplist
+---
+<h1>Package skiplist</h1>
+<code>import "github.com/byte-mug/golibs/skiplist"</code><h2>Overview</h2>
+<div>
+<p>
+Skip List implement in Go.
+</p>
+<p>
+A Skip List is a data structure that allows fast search within an ordered
+sequence of elements. Fast search is made possible by maintaining a linked
+hierarchy of subsequences, each skipping over fewer elements.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#Skiplist">type Skiplist</a><br><ul>
+<li><a href="#NewSkipList">	func NewSkipList(comparator utils.Comparator) *Skiplist</a></li>
+<li><a href="#Skiplist.Delete">	func (b *Skiplist) Delete(searchKey interface{}) error</a></li>
+<li><a href="#Skiplist.DisplayAll">	func (b *Skiplist) DisplayAll()</a></li>
+<li><a href="#Skiplist.Insert">	func (b *Skiplist) Insert(searchKey interface{}, value interface{})</a></li>
+<li><a href="#Skiplist.RandomLevel">	func (b *Skiplist) RandomLevel() int</a></li>
+<li><a href="#Skiplist.Search">	func (b *Skiplist) Search(searchKey interface{}) (interface{}, error)</a></li>
+<li><a href="#Skiplist.SetMaxLevel">	func (b *Skiplist) SetMaxLevel(maxLevel int)</a></li>
+</ul></li>
+<li><a href="#Skipnode">type Skipnode</a><br><ul>
+<li><a href="#NewHeader">	func NewHeader(createLevel int, maxLevel int) *Skipnode</a></li>
+<li><a href="#NewNode">	func NewNode(searchKey interface{}, value interface{}, createLevel int, maxLevel int) *Skipnode</a></li>
+</ul></li>
+</ul>
+<h2 id="pkg-Constants">Constants</h2>
+<div>
+<pre>const (
+	DefaultMaxLevel		int	= 15	//Maximal level allow to create in this skip list
+	DefaultPropobility	float32	= 0.25	//Default propobility
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Skiplist">type Skiplist</h2>
+<div>
+<pre>type Skiplist struct {
+	Header	*Skipnode
+
+	// List configuration
+	MaxLevel	int
+	Propobility	float32
+
+	// List Comparison
+	Comparator	utils.Comparator
+
+	// List status
+	Level	int	//current level of whole skiplist
+
+	Random	*rand.Rand
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewSkipList">func NewSkipList</h2>
+<div>
+<pre>func NewSkipList(comparator utils.Comparator) *Skiplist
+</pre>
+<p>
+NewSkipList : Init structure for Skit List.
+</p>
+</div>
+<h2 id="Skiplist.Delete">func (*Skiplist) Delete</h2>
+<div>
+<pre>func (b *Skiplist) Delete(searchKey interface{}) error
+</pre>
+<p>
+Delete: Delete element by search key
+</p>
+</div>
+<h2 id="Skiplist.DisplayAll">func (*Skiplist) DisplayAll</h2>
+<div>
+<pre>func (b *Skiplist) DisplayAll()
+</pre>
+<p>
+DisplayAll: Display current SkipList content in console, will also print out the linked pointer.
+</p>
+</div>
+<h2 id="Skiplist.Insert">func (*Skiplist) Insert</h2>
+<div>
+<pre>func (b *Skiplist) Insert(searchKey interface{}, value interface{})
+</pre>
+<p>
+Insert: Insert a search key and its value which could be interface.
+</p>
+</div>
+<h2 id="Skiplist.RandomLevel">func (*Skiplist) RandomLevel</h2>
+<div>
+<pre>func (b *Skiplist) RandomLevel() int
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Skiplist.Search">func (*Skiplist) Search</h2>
+<div>
+<pre>func (b *Skiplist) Search(searchKey interface{}) (interface{}, error)
+</pre>
+<p>
+Search: Search a element by search key and return the interface{}
+</p>
+</div>
+<h2 id="Skiplist.SetMaxLevel">func (*Skiplist) SetMaxLevel</h2>
+<div>
+<pre>func (b *Skiplist) SetMaxLevel(maxLevel int)
+</pre>
+<p>
+Change SkipList default maxlevel is 4.
+</p>
+</div>
+<h2 id="Skipnode">type Skipnode</h2>
+<div>
+<pre>type Skipnode struct {
+	Key	interface{}
+	Val	interface{}
+	Forward	[]*Skipnode
+	Level	int
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewHeader">func NewHeader</h2>
+<div>
+<pre>func NewHeader(createLevel int, maxLevel int) *Skipnode
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewNode">func NewNode</h2>
+<div>
+<pre>func NewNode(searchKey interface{}, value interface{}, createLevel int, maxLevel int) *Skipnode
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/emirpasic/gods/utils"</code></li><li><code>import "math/rand"</code></li><li><code>import "time"</code></li>
+{% include_relative list.html %}

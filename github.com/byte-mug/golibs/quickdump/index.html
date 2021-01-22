@@ -1,0 +1,64 @@
+---
+layout: godoc
+title: quickdump
+gopkg: github.com/byte-mug/golibs/quickdump
+---
+<h1>Package quickdump</h1>
+<code>import "github.com/byte-mug/golibs/quickdump"</code><h2>Overview</h2>
+<div>
+<p>
+QuickDump, a PreciseIO based simple Serialization system, that is much easier to use
+than serializer.
+</p>
+<p>
+QuickDump is capable to serialize structures without any need to previously create serializers for it.
+</p>
+<p>
+As a limitation: QuickDump is strictly typed - &#34;interface{}&#34; does not work at all. Also
+QuickDump is brittle. Wrong types will cause QuickDump to panic.
+</p>
+<h3 id="hdr-Nullable">Nullable</h3>
+<p>
+By default every pointer is a NULLable (implicitely). You can cause every NULLable value to be
+treated as non-nullable by setting the quickdump:&#34;strip&#34; tag. You can also explicitely mark
+a value as NULLable, if it&#39;s type supports it, by setting the quickdump:&#34;nullable&#34; tag.
+</p>
+<p>
+Here are the examples of nullable values:
+</p>
+<pre>Nullable1 *DesiredType                         `quickdump:&#34;nullable&#34;` // NULLable by default, but we made it explicitely.
+Nullable2 struct{ Ok bool; Data DesiredType }  `quickdump:&#34;nullable&#34;` // If Ok is false, value is NULL
+</pre>
+<h3 id="hdr-Variants">Variants</h3>
+<p>
+Variants are a sequence of Fields, where ony one of them will be serialized. They are used to implement
+some kind of Dynamic Typing/Polymorphism.
+</p>
+<pre>type Variant struct{
+	Alpha *Alpha  `quickdump:&#34;tag,strip&#34;`
+	Beta  *Beta   `quickdump:&#34;more,strip&#34;`
+	Gamma *Gamma  `quickdump:&#34;more,strip&#34;`
+}
+</pre>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Marshal">	func Marshal(w *preciseio.PreciseWriter, i interface{}) error</a></li>
+<li><a href="#Unmarshal">	func Unmarshal(r preciseio.PreciseReader, i interface{}) error</a></li>
+</ul>
+<h2 id="Marshal">func Marshal</h2>
+<div>
+<pre>func Marshal(w *preciseio.PreciseWriter, i interface{}) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Unmarshal">func Unmarshal</h2>
+<div>
+<pre>func Unmarshal(r preciseio.PreciseReader, i interface{}) error
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/golibs/preciseio"</code></li><li><code>import "math"</code></li><li><code>import "reflect"</code></li>
+{% include_relative list.html %}

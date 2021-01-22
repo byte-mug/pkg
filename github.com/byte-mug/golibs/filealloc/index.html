@@ -1,0 +1,147 @@
+---
+layout: godoc
+title: filealloc
+gopkg: github.com/byte-mug/golibs/filealloc
+---
+<h1>Package filealloc</h1>
+<code>import "github.com/byte-mug/golibs/filealloc"</code><h2>Overview</h2>
+<div>
+<p>
+This package offers space-management of os.File-like entities.
+</p>
+<p>
+Each allocation is broken down to a set of simple, atomic steps, so that
+the file does not get corrupted, if the process or system crashes during an
+allocation or deallocation.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#LL_getRawSizeForRank">	func LL_getRawSizeForRank(i uint) int</a></li>
+<li><a href="#Allocator">type Allocator</a><br><ul>
+<li><a href="#NewAllocator">	func NewAllocator(f File) (*Allocator, error)</a></li>
+<li><a href="#Allocator.Alloc">	func (a *Allocator) Alloc(size int, noGrow bool) (int64, error)</a></li>
+<li><a href="#Allocator.ApproxFreeSpace">	func (a *Allocator) ApproxFreeSpace() (total int64)</a></li>
+<li><a href="#Allocator.ApproxFreeSpaceFor">	func (a *Allocator) ApproxFreeSpaceFor(minSize int) (total int64)</a></li>
+<li><a href="#Allocator.FileSize">	func (a *Allocator) FileSize() int64</a></li>
+<li><a href="#Allocator.Free">	func (a *Allocator) Free(off int64) error</a></li>
+<li><a href="#Allocator.LL_getRanks">	func (a *Allocator) LL_getRanks() [30]int64</a></li>
+<li><a href="#Allocator.UsableSize">	func (a *Allocator) UsableSize(off int64) (int, error)</a></li>
+</ul></li>
+<li><a href="#File">type File</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var EDoubleFree = fmt.Errorf(&#34;Warning: Double Free&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var EInternalError = fmt.Errorf(&#34;Invalid Offset&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var EInvalidOffset = fmt.Errorf(&#34;Invalid Offset&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="LL_getRawSizeForRank">func LL_getRawSizeForRank</h2>
+<div>
+<pre>func LL_getRawSizeForRank(i uint) int
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator">type Allocator</h2>
+<div>
+<pre>type Allocator struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+Allocator manages allocation of file blocks within a File.
+</p>
+<p>
+Allocator methods are not safe for concurrent use by multiple goroutines.
+Callers must provide their own synchronization whan it&#39;s used concurrently
+by multiple goroutines.
+</p>
+</div>
+<h2 id="NewAllocator">func NewAllocator</h2>
+<div>
+<pre>func NewAllocator(f File) (*Allocator, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.Alloc">func (*Allocator) Alloc</h2>
+<div>
+<pre>func (a *Allocator) Alloc(size int, noGrow bool) (int64, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.ApproxFreeSpace">func (*Allocator) ApproxFreeSpace</h2>
+<div>
+<pre>func (a *Allocator) ApproxFreeSpace() (total int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.ApproxFreeSpaceFor">func (*Allocator) ApproxFreeSpaceFor</h2>
+<div>
+<pre>func (a *Allocator) ApproxFreeSpaceFor(minSize int) (total int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.FileSize">func (*Allocator) FileSize</h2>
+<div>
+<pre>func (a *Allocator) FileSize() int64
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.Free">func (*Allocator) Free</h2>
+<div>
+<pre>func (a *Allocator) Free(off int64) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.LL_getRanks">func (*Allocator) LL_getRanks</h2>
+<div>
+<pre>func (a *Allocator) LL_getRanks() [30]int64
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Allocator.UsableSize">func (*Allocator) UsableSize</h2>
+<div>
+<pre>func (a *Allocator) UsableSize(off int64) (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="File">type File</h2>
+<div>
+<pre>type File interface {
+	Close() error
+	ReadAt(p []byte, off int64) (n int, err error)
+	Stat() (os.FileInfo, error)
+	Sync() error
+	Truncate(int64) error
+	WriteAt(p []byte, off int64) (n int, err error)
+}
+</pre>
+<p>
+*os.File
+</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding/binary"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/golibs/buffer"</code></li><li><code>import "github.com/byte-mug/golibs/pstruct"</code></li><li><code>import "os"</code></li>
+{% include_relative list.html %}

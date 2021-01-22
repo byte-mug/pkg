@@ -1,0 +1,247 @@
+---
+layout: godoc
+title: flatfile
+gopkg: github.com/byte-mug/golibs/flatfile
+---
+<h1>Package flatfile</h1>
+<code>import "github.com/byte-mug/golibs/flatfile"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#pkg-Variables">Variables</a></li><li><a href="#ScanFlatFile">	func ScanFlatFile(r io.ReaderAt) (recs int, off int64, err error)</a></li>
+<li><a href="#FlatFileIterator">type FlatFileIterator</a><br><ul>
+<li><a href="#FlatFileIterator.Init">	func (f *FlatFileIterator) Init(src io.ReaderAt)</a></li>
+<li><a href="#FlatFileIterator.Next">	func (f *FlatFileIterator) Next() (recordID int, recordOffset int64, recordLength int, ioError error)</a></li>
+</ul></li>
+<li><a href="#FlatFileReader">type FlatFileReader</a><br><ul>
+<li><a href="#FlatFileReader.FillCache">	func (r *FlatFileReader) FillCache(count int)</a></li>
+<li><a href="#FlatFileReader.Init">	func (r *FlatFileReader) Init(src io.ReaderAt)</a></li>
+<li><a href="#FlatFileReader.InitEx">	func (r *FlatFileReader) InitEx(src io.ReaderAt, maxCache int)</a></li>
+<li><a href="#FlatFileReader.ReadEntry">	func (r *FlatFileReader) ReadEntry(recordID int) (*[]byte, []byte, error)</a></li>
+<li><a href="#FlatFileReader.ReadPosition">	func (r *FlatFileReader) ReadPosition(recordID int) (recordOffset int64, recordLength int, ioError error)</a></li>
+</ul></li>
+<li><a href="#FlatFileWriter">type FlatFileWriter</a><br><ul>
+<li><a href="#FlatFileWriter.Append">	func (w *FlatFileWriter) Append(buf []byte) (recordID int, err error)</a></li>
+<li><a href="#FlatFileWriter.InitAppend">	func (w *FlatFileWriter) InitAppend(dest ReaderWriter) (err error)</a></li>
+<li><a href="#FlatFileWriter.InitEx">	func (w *FlatFileWriter) InitEx(dest io.WriterAt, recs int, length int64)</a></li>
+<li><a href="#FlatFileWriter.InitNew">	func (w *FlatFileWriter) InitNew(dest io.WriterAt)</a></li>
+<li><a href="#FlatFileWriter.ShouldHaveLength">	func (w *FlatFileWriter) ShouldHaveLength() int64</a></li>
+</ul></li>
+<li><a href="#PositionCache">type PositionCache</a><br><ul>
+<li><a href="#PositionCache.Append">	func (p *PositionCache) Append(id int, off int64)</a></li>
+<li><a href="#PositionCache.Init">	func (p *PositionCache) Init(max int)</a></li>
+<li><a href="#PositionCache.Last">	func (p *PositionCache) Last() (int, int64, bool)</a></li>
+<li><a href="#PositionCache.Search">	func (p *PositionCache) Search(id int) (int, int64)</a></li>
+</ul></li>
+<li><a href="#ReaderWriter">type ReaderWriter</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="pkg-Constants">Constants</h2>
+<div>
+<pre>const (
+	MaxRawSize	= (1 &lt;&lt; 24)		// 16 MiB
+	MaxRecordSize	= MaxRawSize - 4	// 16 MiB - 4 Byte
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var EBadRecord = errors.New(&#34;Bad Record&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var ERecordTooLong = errors.New(&#34;Record Too Long&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ScanFlatFile">func ScanFlatFile</h2>
+<div>
+<pre>func ScanFlatFile(r io.ReaderAt) (recs int, off int64, err error)
+</pre>
+<p>
+Scans a flat-file until the end, and then it returns its length.
+</p>
+<p>
+It will always return an error, usually EBadRecord or io.EOF, depending on the consistency of the file.
+If the file was corrupted, it will read until the last usable record.
+</p>
+</div>
+<h2 id="FlatFileIterator">type FlatFileIterator</h2>
+<div>
+<pre>type FlatFileIterator struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileIterator.Init">func (*FlatFileIterator) Init</h2>
+<div>
+<pre>func (f *FlatFileIterator) Init(src io.ReaderAt)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileIterator.Next">func (*FlatFileIterator) Next</h2>
+<div>
+<pre>func (f *FlatFileIterator) Next() (recordID int, recordOffset int64, recordLength int, ioError error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader">type FlatFileReader</h2>
+<div>
+<pre>type FlatFileReader struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader.FillCache">func (*FlatFileReader) FillCache</h2>
+<div>
+<pre>func (r *FlatFileReader) FillCache(count int)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader.Init">func (*FlatFileReader) Init</h2>
+<div>
+<pre>func (r *FlatFileReader) Init(src io.ReaderAt)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader.InitEx">func (*FlatFileReader) InitEx</h2>
+<div>
+<pre>func (r *FlatFileReader) InitEx(src io.ReaderAt, maxCache int)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader.ReadEntry">func (*FlatFileReader) ReadEntry</h2>
+<div>
+<pre>func (r *FlatFileReader) ReadEntry(recordID int) (*[]byte, []byte, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileReader.ReadPosition">func (*FlatFileReader) ReadPosition</h2>
+<div>
+<pre>func (r *FlatFileReader) ReadPosition(recordID int) (recordOffset int64, recordLength int, ioError error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileWriter">type FlatFileWriter</h2>
+<div>
+<pre>type FlatFileWriter struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileWriter.Append">func (*FlatFileWriter) Append</h2>
+<div>
+<pre>func (w *FlatFileWriter) Append(buf []byte) (recordID int, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FlatFileWriter.InitAppend">func (*FlatFileWriter) InitAppend</h2>
+<div>
+<pre>func (w *FlatFileWriter) InitAppend(dest ReaderWriter) (err error)
+</pre>
+<p>
+Scans a flat-file until the end, and then use its length and record count to initialize the FFWriter.
+</p>
+<p>
+It will always return an error, usually EBadRecord or io.EOF, depending on the consistency of the file.
+If the file was corrupted, it will read until the last usable record.
+After that, it will append new Entries.
+</p>
+</div>
+<h2 id="FlatFileWriter.InitEx">func (*FlatFileWriter) InitEx</h2>
+<div>
+<pre>func (w *FlatFileWriter) InitEx(dest io.WriterAt, recs int, length int64)
+</pre>
+<p>
+Danger-Zone. Use this function, if and only if, you know what you are doing.
+</p>
+<p>
+This function initializes the FFWriter using a given number of records, and a given length.
+If the number of recs is incorrect, the returned ids will be wrong.
+If the length is incorrect, the file will be corrupted.
+</p>
+</div>
+<h2 id="FlatFileWriter.InitNew">func (*FlatFileWriter) InitNew</h2>
+<div>
+<pre>func (w *FlatFileWriter) InitNew(dest io.WriterAt)
+</pre>
+<p>
+Initializes the FFWriter, assuming, that dest is empty.
+</p>
+</div>
+<h2 id="FlatFileWriter.ShouldHaveLength">func (*FlatFileWriter) ShouldHaveLength</h2>
+<div>
+<pre>func (w *FlatFileWriter) ShouldHaveLength() int64
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PositionCache">type PositionCache</h2>
+<div>
+<pre>type PositionCache struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PositionCache.Append">func (*PositionCache) Append</h2>
+<div>
+<pre>func (p *PositionCache) Append(id int, off int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PositionCache.Init">func (*PositionCache) Init</h2>
+<div>
+<pre>func (p *PositionCache) Init(max int)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PositionCache.Last">func (*PositionCache) Last</h2>
+<div>
+<pre>func (p *PositionCache) Last() (int, int64, bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PositionCache.Search">func (*PositionCache) Search</h2>
+<div>
+<pre>func (p *PositionCache) Search(id int) (int, int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ReaderWriter">type ReaderWriter</h2>
+<div>
+<pre>type ReaderWriter interface {
+	io.ReaderAt
+	io.WriterAt
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding/binary"</code></li><li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/golibs/buffer"</code></li><li><code>import "io"</code></li><li><code>import "sort"</code></li><li><code>import "sync"</code></li>
+{% include_relative list.html %}

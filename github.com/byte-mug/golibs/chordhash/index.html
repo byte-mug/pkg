@@ -1,0 +1,262 @@
+---
+layout: godoc
+title: chordhash
+gopkg: github.com/byte-mug/golibs/chordhash
+---
+<h1>Package chordhash</h1>
+<code>import "github.com/byte-mug/golibs/chordhash"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#NodeNonNil">	func NodeNonNil(n *avl.Node) *avl.Node</a></li>
+<li><a href="#Strnode">	func Strnode(n *avl.Node) string</a></li>
+<li><a href="#Circle">type Circle</a><br><ul>
+<li><a href="#Circle.Init">	func (c *Circle) Init()</a></li>
+<li><a href="#Circle.Next">	func (c *Circle) Next(key interface{}) (node *avl.Node)</a></li>
+<li><a href="#Circle.NextOrEqual">	func (c *Circle) NextOrEqual(key interface{}) (node *avl.Node)</a></li>
+<li><a href="#Circle.Prev">	func (c *Circle) Prev(key interface{}) (node *avl.Node)</a></li>
+<li><a href="#Circle.PrevOrEqual">	func (c *Circle) PrevOrEqual(key interface{}) (node *avl.Node)</a></li>
+<li><a href="#Circle.Step">	func (c *Circle) Step(node *avl.Node) (next *avl.Node)</a></li>
+<li><a href="#Circle.StepReverse">	func (c *Circle) StepReverse(node *avl.Node) (prev *avl.Node)</a></li>
+</ul></li>
+<li><a href="#NodeID">type NodeID</a><br><ul>
+<li><a href="#NodeID.Bits">	func (n NodeID) Bits() int</a></li>
+<li><a href="#NodeID.Clone">	func (n NodeID) Clone() NodeID</a></li>
+<li><a href="#NodeID.Decrement">	func (n NodeID) Decrement()</a></li>
+<li><a href="#NodeID.FingerBase">	func (n NodeID) FingerBase(k uint)</a></li>
+<li><a href="#NodeID.Increment">	func (n NodeID) Increment()</a></li>
+<li><a href="#NodeID.Set">	func (n *NodeID) Set(other NodeID)</a></li>
+</ul></li>
+<li><a href="#NodeManager">type NodeManager</a><br><ul>
+<li><a href="#NodeManager.Init">	func (n *NodeManager) Init()</a></li>
+<li><a href="#NodeManager.Insert">	func (n *NodeManager) Insert(id NodeID, attachment interface{})</a></li>
+<li><a href="#NodeManager.LookupFinger">	func (n *NodeManager) LookupFinger(id NodeID) *avl.Node</a></li>
+<li><a href="#NodeManager.LookupPrecise">	func (n *NodeManager) LookupPrecise(id NodeID) *avl.Node</a></li>
+<li><a href="#NodeManager.Predecessor">	func (n *NodeManager) Predecessor() *avl.Node</a></li>
+<li><a href="#NodeManager.Remove">	func (n *NodeManager) Remove(id NodeID)</a></li>
+<li><a href="#NodeManager.Replace">	func (n *NodeManager) Replace(id NodeID, new_attachment interface{})</a></li>
+<li><a href="#NodeManager.SetSelf">	func (n *NodeManager) SetSelf(id NodeID)</a></li>
+<li><a href="#NodeManager.Successor">	func (n *NodeManager) Successor() *avl.Node</a></li>
+</ul></li>
+</ul>
+<h2 id="NodeNonNil">func NodeNonNil</h2>
+<div>
+<pre>func NodeNonNil(n *avl.Node) *avl.Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Strnode">func Strnode</h2>
+<div>
+<pre>func Strnode(n *avl.Node) string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle">type Circle</h2>
+<div>
+<pre>type Circle struct {
+	Tree *avl.Tree
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.Init">func (*Circle) Init</h2>
+<div>
+<pre>func (c *Circle) Init()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.Next">func (*Circle) Next</h2>
+<div>
+<pre>func (c *Circle) Next(key interface{}) (node *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.NextOrEqual">func (*Circle) NextOrEqual</h2>
+<div>
+<pre>func (c *Circle) NextOrEqual(key interface{}) (node *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.Prev">func (*Circle) Prev</h2>
+<div>
+<pre>func (c *Circle) Prev(key interface{}) (node *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.PrevOrEqual">func (*Circle) PrevOrEqual</h2>
+<div>
+<pre>func (c *Circle) PrevOrEqual(key interface{}) (node *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.Step">func (*Circle) Step</h2>
+<div>
+<pre>func (c *Circle) Step(node *avl.Node) (next *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Circle.StepReverse">func (*Circle) StepReverse</h2>
+<div>
+<pre>func (c *Circle) StepReverse(node *avl.Node) (prev *avl.Node)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeID">type NodeID</h2>
+<div>
+<pre>type NodeID []byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeID.Bits">func (NodeID) Bits</h2>
+<div>
+<pre>func (n NodeID) Bits() int
+</pre>
+<p>
+Returns:
+</p>
+<pre>len(n)*8
+</pre>
+</div>
+<h2 id="NodeID.Clone">func (NodeID) Clone</h2>
+<div>
+<pre>func (n NodeID) Clone() NodeID
+</pre>
+<p>
+Generates a Copy.
+</p>
+</div>
+<h2 id="NodeID.Decrement">func (NodeID) Decrement</h2>
+<div>
+<pre>func (n NodeID) Decrement()
+</pre>
+<p>
+Calculates:
+</p>
+<pre>n = (n - 1) mod 1&lt;&lt;n.Bits()
+</pre>
+</div>
+<h2 id="NodeID.FingerBase">func (NodeID) FingerBase</h2>
+<div>
+<pre>func (n NodeID) FingerBase(k uint)
+</pre>
+<p>
+Calculates:
+</p>
+<pre>n = (n + (1&lt;&lt;k)) mod 1&lt;&lt;n.Bits()
+</pre>
+</div>
+<h2 id="NodeID.Increment">func (NodeID) Increment</h2>
+<div>
+<pre>func (n NodeID) Increment()
+</pre>
+<p>
+Calculates:
+</p>
+<pre>n = (n + 1) mod 1&lt;&lt;n.Bits()
+</pre>
+</div>
+<h2 id="NodeID.Set">func (*NodeID) Set</h2>
+<div>
+<pre>func (n *NodeID) Set(other NodeID)
+</pre>
+<p>
+Assigns the Value of the NodeID &#39;other&#39; to &#39;n&#39;, adjusting the buffer size, if necessary.
+</p>
+<p>
+Internally, it does:
+</p>
+<pre>*n = append((*n)[:0],other...)
+</pre>
+</div>
+<h2 id="NodeManager">type NodeManager</h2>
+<div>
+<pre>type NodeManager struct {
+	Finger, Nodes	Circle
+	Self		string
+}
+</pre>
+<p>
+A Node manager, offering a holistic member-list and -ring implementation.
+</p>
+<p>
+This implementation requires the whole list of cluster-members, whereas Chord
+only requires a Finger-Table.
+</p>
+</div>
+<h2 id="NodeManager.Init">func (*NodeManager) Init</h2>
+<div>
+<pre>func (n *NodeManager) Init()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.Insert">func (*NodeManager) Insert</h2>
+<div>
+<pre>func (n *NodeManager) Insert(id NodeID, attachment interface{})
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.LookupFinger">func (*NodeManager) LookupFinger</h2>
+<div>
+<pre>func (n *NodeManager) LookupFinger(id NodeID) *avl.Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.LookupPrecise">func (*NodeManager) LookupPrecise</h2>
+<div>
+<pre>func (n *NodeManager) LookupPrecise(id NodeID) *avl.Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.Predecessor">func (*NodeManager) Predecessor</h2>
+<div>
+<pre>func (n *NodeManager) Predecessor() *avl.Node
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.Remove">func (*NodeManager) Remove</h2>
+<div>
+<pre>func (n *NodeManager) Remove(id NodeID)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.Replace">func (*NodeManager) Replace</h2>
+<div>
+<pre>func (n *NodeManager) Replace(id NodeID, new_attachment interface{})
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.SetSelf">func (*NodeManager) SetSelf</h2>
+<div>
+<pre>func (n *NodeManager) SetSelf(id NodeID)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NodeManager.Successor">func (*NodeManager) Successor</h2>
+<div>
+<pre>func (n *NodeManager) Successor() *avl.Node
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/emirpasic/gods/trees/avltree"</code></li>
+{% include_relative list.html %}

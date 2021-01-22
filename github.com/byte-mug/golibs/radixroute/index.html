@@ -1,0 +1,209 @@
+---
+layout: godoc
+title: radixrouter
+gopkg: github.com/byte-mug/golibs/radixroute
+---
+<h1>Package radixrouter</h1>
+<code>import "github.com/byte-mug/golibs/radixroute"</code><h2>Overview</h2>
+<div>
+<p>
+A radix-tree router for URLs/Paths.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Parameter">type Parameter</a><br><ul>
+</ul></li>
+<li><a href="#ParameterSetter">type ParameterSetter</a><br><ul>
+</ul></li>
+<li><a href="#Tree">type Tree</a><br><ul>
+<li><a href="#New">	func New() *Tree</a></li>
+<li><a href="#Tree.Delete">	func (t *Tree) Delete(s []byte) (interface{}, bool)</a></li>
+<li><a href="#Tree.DeletePrefix">	func (t *Tree) DeletePrefix(s []byte) int</a></li>
+<li><a href="#Tree.Get">	func (t *Tree) Get(s []byte, ps ParameterSetter) (rv interface{}, rok bool)</a></li>
+<li><a href="#Tree.GetParlist">	func (t *Tree) GetParlist(s []byte, par []Parameter) (rv interface{}, rpar []Parameter, rok bool)</a></li>
+<li><a href="#Tree.InsertParameter">	func (t *Tree) InsertParameter(s []byte, name string, cc byte) *Tree</a></li>
+<li><a href="#Tree.InsertRaw">	func (t *Tree) InsertRaw(s []byte, v interface{}) (interface{}, bool)</a></li>
+<li><a href="#Tree.InsertRoute">	func (t *Tree) InsertRoute(s []byte, v interface{}) (interface{}, bool)</a></li>
+<li><a href="#Tree.Len">	func (t *Tree) Len() int</a></li>
+<li><a href="#Tree.LongestPrefix">	func (t *Tree) LongestPrefix(s []byte) ([]byte, interface{}, bool)</a></li>
+<li><a href="#Tree.Maximum">	func (t *Tree) Maximum() ([]byte, interface{}, bool)</a></li>
+<li><a href="#Tree.Minimum">	func (t *Tree) Minimum() ([]byte, interface{}, bool)</a></li>
+<li><a href="#Tree.Walk">	func (t *Tree) Walk(fn WalkFn)</a></li>
+<li><a href="#Tree.WalkPath">	func (t *Tree) WalkPath(path []byte, fn WalkFn)</a></li>
+<li><a href="#Tree.WalkPrefix">	func (t *Tree) WalkPrefix(prefix []byte, fn WalkFn)</a></li>
+</ul></li>
+<li><a href="#WalkFn">type WalkFn</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="Parameter">type Parameter</h2>
+<div>
+<pre>type Parameter struct {
+	Name	string
+	Value	[]byte
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ParameterSetter">type ParameterSetter</h2>
+<div>
+<pre>type ParameterSetter func(key string, value interface{})
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Tree">type Tree</h2>
+<div>
+<pre>type Tree struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+Tree implements a radix tree. This can be treated as a
+Dictionary abstract data type. The main advantage over
+a standard hash map is prefix-based lookups and
+ordered iteration,
+</p>
+</div>
+<h2 id="New">func New</h2>
+<div>
+<pre>func New() *Tree
+</pre>
+<p>
+New returns an empty Tree
+</p>
+</div>
+<h2 id="Tree.Delete">func (*Tree) Delete</h2>
+<div>
+<pre>func (t *Tree) Delete(s []byte) (interface{}, bool)
+</pre>
+<p>
+Delete is used to delete a key, returning the previous
+value and if it was deleted
+</p>
+</div>
+<h2 id="Tree.DeletePrefix">func (*Tree) DeletePrefix</h2>
+<div>
+<pre>func (t *Tree) DeletePrefix(s []byte) int
+</pre>
+<p>
+DeletePrefix is used to delete the subtree under a prefix
+Returns how many nodes were deleted
+Use this to delete large subtrees efficiently
+</p>
+</div>
+<h2 id="Tree.Get">func (*Tree) Get</h2>
+<div>
+<pre>func (t *Tree) Get(s []byte, ps ParameterSetter) (rv interface{}, rok bool)
+</pre>
+<p>
+Get is used to perform a lookup in the route.
+</p>
+</div>
+<h2 id="Tree.GetParlist">func (*Tree) GetParlist</h2>
+<div>
+<pre>func (t *Tree) GetParlist(s []byte, par []Parameter) (rv interface{}, rpar []Parameter, rok bool)
+</pre>
+<p>
+GetParlist is used to perform a lookup in the route.
+</p>
+</div>
+<h2 id="Tree.InsertParameter">func (*Tree) InsertParameter</h2>
+<div>
+<pre>func (t *Tree) InsertParameter(s []byte, name string, cc byte) *Tree
+</pre>
+<p>
+Inserts a new Parameter and returns the subtree. If the subtree already existed
+AND name or cc differ, it panics.
+</p>
+</div>
+<h2 id="Tree.InsertRaw">func (*Tree) InsertRaw</h2>
+<div>
+<pre>func (t *Tree) InsertRaw(s []byte, v interface{}) (interface{}, bool)
+</pre>
+<p>
+Maunually inserts a record into the radix tree.
+</p>
+</div>
+<h2 id="Tree.InsertRoute">func (*Tree) InsertRoute</h2>
+<div>
+<pre>func (t *Tree) InsertRoute(s []byte, v interface{}) (interface{}, bool)
+</pre>
+<p>
+InsertRoute insert a new route. If it overwrote the route, it returns
+(old-value,true) otherwise (nil,false).
+</p>
+</div>
+<h2 id="Tree.Len">func (*Tree) Len</h2>
+<div>
+<pre>func (t *Tree) Len() int
+</pre>
+<p>
+Len is used to return the number of elements in the tree
+</p>
+</div>
+<h2 id="Tree.LongestPrefix">func (*Tree) LongestPrefix</h2>
+<div>
+<pre>func (t *Tree) LongestPrefix(s []byte) ([]byte, interface{}, bool)
+</pre>
+<p>
+LongestPrefix is like Get, but instead of an
+exact match, it will return the longest prefix match.
+</p>
+</div>
+<h2 id="Tree.Maximum">func (*Tree) Maximum</h2>
+<div>
+<pre>func (t *Tree) Maximum() ([]byte, interface{}, bool)
+</pre>
+<p>
+Maximum is used to return the maximum value in the tree
+</p>
+</div>
+<h2 id="Tree.Minimum">func (*Tree) Minimum</h2>
+<div>
+<pre>func (t *Tree) Minimum() ([]byte, interface{}, bool)
+</pre>
+<p>
+Minimum is used to return the minimum value in the tree
+</p>
+</div>
+<h2 id="Tree.Walk">func (*Tree) Walk</h2>
+<div>
+<pre>func (t *Tree) Walk(fn WalkFn)
+</pre>
+<p>
+Walk is used to walk the tree
+</p>
+</div>
+<h2 id="Tree.WalkPath">func (*Tree) WalkPath</h2>
+<div>
+<pre>func (t *Tree) WalkPath(path []byte, fn WalkFn)
+</pre>
+<p>
+WalkPath is used to walk the tree, but only visiting nodes
+from the root down to a given leaf. Where WalkPrefix walks
+all the entries *under* the given prefix, this walks the
+entries *above* the given prefix.
+</p>
+</div>
+<h2 id="Tree.WalkPrefix">func (*Tree) WalkPrefix</h2>
+<div>
+<pre>func (t *Tree) WalkPrefix(prefix []byte, fn WalkFn)
+</pre>
+<p>
+WalkPrefix is used to walk the tree under a prefix
+</p>
+</div>
+<h2 id="WalkFn">type WalkFn</h2>
+<div>
+<pre>type WalkFn func(s []byte, v interface{}) bool
+</pre>
+<p>
+WalkFn is used when walking the tree. Takes a
+key and value, returning if iteration should
+be terminated.
+</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bytes"</code></li><li><code>import "fmt"</code></li><li><code>import "regexp"</code></li><li><code>import "sort"</code></li><li><code>import "sync"</code></li>
+{% include_relative list.html %}

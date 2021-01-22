@@ -1,0 +1,349 @@
+---
+layout: godoc
+title: serializer
+gopkg: github.com/byte-mug/golibs/serializer
+---
+<h1>Package serializer</h1>
+<code>import "github.com/byte-mug/golibs/serializer"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Cast">	func Cast(t reflect.Type, i interface{}) (v reflect.Value)</a></li>
+<li><a href="#CastV">	func CastV(t reflect.Type, v reflect.Value) reflect.Value</a></li>
+<li><a href="#Deserialize">	func Deserialize(ce CodecElement, r preciseio.PreciseReader) (interface{}, error)</a></li>
+<li><a href="#GetInterface">	func GetInterface(v reflect.Value) interface{}</a></li>
+<li><a href="#Serialize">	func Serialize(ce CodecElement, w *preciseio.PreciseWriter, i interface{}) error</a></li>
+<li><a href="#CodecElement">type CodecElement</a><br><ul>
+<li><a href="#AddPtr">	func AddPtr(i interface{}) CodecElement</a></li>
+<li><a href="#AddPtrWith">	func AddPtrWith(i interface{}, ce CodecElement) CodecElement</a></li>
+<li><a href="#ForContainerWith">	func ForContainerWith(i interface{}, ce CodecElement) CodecElement</a></li>
+<li><a href="#ForContainerWithDepth">	func ForContainerWithDepth(i interface{}, depth int, ce CodecElement) CodecElement</a></li>
+<li><a href="#ForContainerWithDepthP">	func ForContainerWithDepthP(i interface{}, depth int, ce CodecElement) CodecElement</a></li>
+<li><a href="#ForContainerWithP">	func ForContainerWithP(i interface{}, ce CodecElement) CodecElement</a></li>
+<li><a href="#ForType">	func ForType(i interface{}) CodecElement</a></li>
+<li><a href="#ForTypeP">	func ForTypeP(i interface{}) CodecElement</a></li>
+<li><a href="#StripawayPtr">	func StripawayPtr(i interface{}) CodecElement</a></li>
+<li><a href="#StripawayPtrWith">	func StripawayPtrWith(i interface{}, ce CodecElement) CodecElement</a></li>
+</ul></li>
+<li><a href="#StructBuilder">type StructBuilder</a><br><ul>
+<li><a href="#With">	func With(i interface{}) *StructBuilder</a></li>
+<li><a href="#WithInline">	func WithInline(i interface{}) *StructBuilder</a></li>
+<li><a href="#StructBuilder.Field">	func (s *StructBuilder) Field(name string) *StructBuilder</a></li>
+<li><a href="#StructBuilder.FieldContainerWith">	func (s *StructBuilder) FieldContainerWith(name string, ce CodecElement) *StructBuilder</a></li>
+<li><a href="#StructBuilder.FieldContainerWithDepth">	func (s *StructBuilder) FieldContainerWithDepth(name string, depth int, ce CodecElement) *StructBuilder</a></li>
+<li><a href="#StructBuilder.FieldWith">	func (s *StructBuilder) FieldWith(name string, ce CodecElement) *StructBuilder</a></li>
+<li><a href="#StructBuilder.Read">	func (s *StructBuilder) Read(r preciseio.PreciseReader, v reflect.Value) error</a></li>
+<li><a href="#StructBuilder.Write">	func (s *StructBuilder) Write(w *preciseio.PreciseWriter, v reflect.Value) error</a></li>
+</ul></li>
+<li><a href="#TypeSwitch">type TypeSwitch</a><br><ul>
+<li><a href="#Switch">	func Switch(def byte) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddType">	func (t *TypeSwitch) AddType(b byte, i interface{}) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeContainerWith">	func (t *TypeSwitch) AddTypeContainerWith(b byte, i interface{}, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeContainerWithDepth">	func (t *TypeSwitch) AddTypeContainerWithDepth(b byte, i interface{}, depth int, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeContainerWithDepthP">	func (t *TypeSwitch) AddTypeContainerWithDepthP(b byte, i interface{}, depth int, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeContainerWithP">	func (t *TypeSwitch) AddTypeContainerWithP(b byte, i interface{}, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeP">	func (t *TypeSwitch) AddTypeP(b byte, i interface{}) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeWith">	func (t *TypeSwitch) AddTypeWith(b byte, i interface{}, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.AddTypeWithP">	func (t *TypeSwitch) AddTypeWithP(b byte, i interface{}, ce CodecElement) *TypeSwitch</a></li>
+<li><a href="#TypeSwitch.Read">	func (t *TypeSwitch) Read(r preciseio.PreciseReader, v reflect.Value) error</a></li>
+<li><a href="#TypeSwitch.Write">	func (t *TypeSwitch) Write(w *preciseio.PreciseWriter, v reflect.Value) error</a></li>
+</ul></li>
+</ul>
+<h2 id="Cast">func Cast</h2>
+<div>
+<pre>func Cast(t reflect.Type, i interface{}) (v reflect.Value)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CastV">func CastV</h2>
+<div>
+<pre>func CastV(t reflect.Type, v reflect.Value) reflect.Value
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Deserialize">func Deserialize</h2>
+<div>
+<pre>func Deserialize(ce CodecElement, r preciseio.PreciseReader) (interface{}, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GetInterface">func GetInterface</h2>
+<div>
+<pre>func GetInterface(v reflect.Value) interface{}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Serialize">func Serialize</h2>
+<div>
+<pre>func Serialize(ce CodecElement, w *preciseio.PreciseWriter, i interface{}) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CodecElement">type CodecElement</h2>
+<div>
+<pre>type CodecElement interface {
+	Read(r preciseio.PreciseReader, v reflect.Value) error
+	Write(w *preciseio.PreciseWriter, v reflect.Value) error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="AddPtr">func AddPtr</h2>
+<div>
+<pre>func AddPtr(i interface{}) CodecElement
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="AddPtrWith">func AddPtrWith</h2>
+<div>
+<pre>func AddPtrWith(i interface{}, ce CodecElement) CodecElement
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ForContainerWith">func ForContainerWith</h2>
+<div>
+<pre>func ForContainerWith(i interface{}, ce CodecElement) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i) and ce as the serializer for the contained elements.
+</p>
+</div>
+<h2 id="ForContainerWithDepth">func ForContainerWithDepth</h2>
+<div>
+<pre>func ForContainerWithDepth(i interface{}, depth int, ce CodecElement) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i) and ce as the serializer for the contained elements (after depth).
+</p>
+<p>
+For example:
+</p>
+<pre>ForContainerWithDepth([][]*Bar{},2,fooBar)
+</pre>
+<p>
+is equivalent to:
+</p>
+<pre>ForContainerWith([][]*Bar{},ForContainerWith([]*Bar{},fooBar)))
+</pre>
+</div>
+<h2 id="ForContainerWithDepthP">func ForContainerWithDepthP</h2>
+<div>
+<pre>func ForContainerWithDepthP(i interface{}, depth int, ce CodecElement) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i).Elem() and ce as the serializer for the contained elements (after depth).
+</p>
+<p>
+For example:
+</p>
+<pre>ForContainerWithDepthP(new([2][2]*Bar),2,fooBar)
+</pre>
+<p>
+is equivalent to:
+</p>
+<pre>ForContainerWithP(new([2][2]*Bar),ForContainerWithP(new([2]*Bar),fooBar))
+</pre>
+</div>
+<h2 id="ForContainerWithP">func ForContainerWithP</h2>
+<div>
+<pre>func ForContainerWithP(i interface{}, ce CodecElement) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i).Elem() and ce as the serializer for the contained elements.
+</p>
+</div>
+<h2 id="ForType">func ForType</h2>
+<div>
+<pre>func ForType(i interface{}) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i)
+</p>
+</div>
+<h2 id="ForTypeP">func ForTypeP</h2>
+<div>
+<pre>func ForTypeP(i interface{}) CodecElement
+</pre>
+<p>
+Obtains the serializer for reflect.TypeOf(i).Elem()
+</p>
+</div>
+<h2 id="StripawayPtr">func StripawayPtr</h2>
+<div>
+<pre>func StripawayPtr(i interface{}) CodecElement
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StripawayPtrWith">func StripawayPtrWith</h2>
+<div>
+<pre>func StripawayPtrWith(i interface{}, ce CodecElement) CodecElement
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder">type StructBuilder</h2>
+<div>
+<pre>type StructBuilder struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="With">func With</h2>
+<div>
+<pre>func With(i interface{}) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WithInline">func WithInline</h2>
+<div>
+<pre>func WithInline(i interface{}) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.Field">func (*StructBuilder) Field</h2>
+<div>
+<pre>func (s *StructBuilder) Field(name string) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.FieldContainerWith">func (*StructBuilder) FieldContainerWith</h2>
+<div>
+<pre>func (s *StructBuilder) FieldContainerWith(name string, ce CodecElement) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.FieldContainerWithDepth">func (*StructBuilder) FieldContainerWithDepth</h2>
+<div>
+<pre>func (s *StructBuilder) FieldContainerWithDepth(name string, depth int, ce CodecElement) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.FieldWith">func (*StructBuilder) FieldWith</h2>
+<div>
+<pre>func (s *StructBuilder) FieldWith(name string, ce CodecElement) *StructBuilder
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.Read">func (*StructBuilder) Read</h2>
+<div>
+<pre>func (s *StructBuilder) Read(r preciseio.PreciseReader, v reflect.Value) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StructBuilder.Write">func (*StructBuilder) Write</h2>
+<div>
+<pre>func (s *StructBuilder) Write(w *preciseio.PreciseWriter, v reflect.Value) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch">type TypeSwitch</h2>
+<div>
+<pre>type TypeSwitch struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+Creates a type-mapping for up to 255 different types.
+The type is indicated by the first byte.
+</p>
+</div>
+<h2 id="Switch">func Switch</h2>
+<div>
+<pre>func Switch(def byte) *TypeSwitch
+</pre>
+<p>
+Starts a new type switching. A default key must be specified.
+</p>
+</div>
+<h2 id="TypeSwitch.AddType">func (*TypeSwitch) AddType</h2>
+<div>
+<pre>func (t *TypeSwitch) AddType(b byte, i interface{}) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeContainerWith">func (*TypeSwitch) AddTypeContainerWith</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeContainerWith(b byte, i interface{}, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeContainerWithDepth">func (*TypeSwitch) AddTypeContainerWithDepth</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeContainerWithDepth(b byte, i interface{}, depth int, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeContainerWithDepthP">func (*TypeSwitch) AddTypeContainerWithDepthP</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeContainerWithDepthP(b byte, i interface{}, depth int, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeContainerWithP">func (*TypeSwitch) AddTypeContainerWithP</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeContainerWithP(b byte, i interface{}, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeP">func (*TypeSwitch) AddTypeP</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeP(b byte, i interface{}) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeWith">func (*TypeSwitch) AddTypeWith</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeWith(b byte, i interface{}, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.AddTypeWithP">func (*TypeSwitch) AddTypeWithP</h2>
+<div>
+<pre>func (t *TypeSwitch) AddTypeWithP(b byte, i interface{}, ce CodecElement) *TypeSwitch
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.Read">func (*TypeSwitch) Read</h2>
+<div>
+<pre>func (t *TypeSwitch) Read(r preciseio.PreciseReader, v reflect.Value) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TypeSwitch.Write">func (*TypeSwitch) Write</h2>
+<div>
+<pre>func (t *TypeSwitch) Write(w *preciseio.PreciseWriter, v reflect.Value) error
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/golibs/preciseio"</code></li><li><code>import "reflect"</code></li><li><code>import "sync"</code></li>
+{% include_relative list.html %}

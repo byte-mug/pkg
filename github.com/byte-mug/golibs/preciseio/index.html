@@ -1,0 +1,170 @@
+---
+layout: godoc
+title: preciseio
+gopkg: github.com/byte-mug/golibs/preciseio
+---
+<h1>Package preciseio</h1>
+<code>import "github.com/byte-mug/golibs/preciseio"</code><h2>Overview</h2>
+<div>
+<p>
+Extended IO Routines to construct Serializers/Deserializers
+to directly operate on bufio-Reader/bufio-Writer.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#PreciseReader">type PreciseReader</a><br><ul>
+<li><a href="#PreciseReader.ReadBlob">	func (pr PreciseReader) ReadBlob() ([]byte, error)</a></li>
+<li><a href="#PreciseReader.ReadListLength">	func (pr PreciseReader) ReadListLength() (int, error)</a></li>
+<li><a href="#PreciseReader.ReadUvarint">	func (pr PreciseReader) ReadUvarint() (uint64, error)</a></li>
+<li><a href="#PreciseReader.ReadVarint">	func (pr PreciseReader) ReadVarint() (int64, error)</a></li>
+</ul></li>
+<li><a href="#PreciseWriter">type PreciseWriter</a><br><ul>
+<li><a href="#PreciseWriterFromPool">	func PreciseWriterFromPool() *PreciseWriter</a></li>
+<li><a href="#PreciseWriter.Initialize">	func (pw *PreciseWriter) Initialize()</a></li>
+<li><a href="#PreciseWriter.PutToPool">	func (w *PreciseWriter) PutToPool()</a></li>
+<li><a href="#PreciseWriter.WriteBlob">	func (pw PreciseWriter) WriteBlob(b []byte) error</a></li>
+<li><a href="#PreciseWriter.WriteListLength">	func (pw PreciseWriter) WriteListLength(i int) error</a></li>
+<li><a href="#PreciseWriter.WriteUvarint">	func (pw PreciseWriter) WriteUvarint(i uint64) error</a></li>
+<li><a href="#PreciseWriter.WriteVarint">	func (pw PreciseWriter) WriteVarint(i int64) error</a></li>
+</ul></li>
+<li><a href="#Reader">type Reader</a><br><ul>
+</ul></li>
+<li><a href="#Writer">type Writer</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var EBlobTooLong = errors.New(&#34;Blob too long&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var EListTooLong = errors.New(&#34;List too long&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseReader">type PreciseReader</h2>
+<div>
+<pre>type PreciseReader struct {
+	R Reader
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseReader.ReadBlob">func (PreciseReader) ReadBlob</h2>
+<div>
+<pre>func (pr PreciseReader) ReadBlob() ([]byte, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseReader.ReadListLength">func (PreciseReader) ReadListLength</h2>
+<div>
+<pre>func (pr PreciseReader) ReadListLength() (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseReader.ReadUvarint">func (PreciseReader) ReadUvarint</h2>
+<div>
+<pre>func (pr PreciseReader) ReadUvarint() (uint64, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseReader.ReadVarint">func (PreciseReader) ReadVarint</h2>
+<div>
+<pre>func (pr PreciseReader) ReadVarint() (int64, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseWriter">type PreciseWriter</h2>
+<div>
+<pre>type PreciseWriter struct {
+	W Writer
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseWriterFromPool">func PreciseWriterFromPool</h2>
+<div>
+<pre>func PreciseWriterFromPool() *PreciseWriter
+</pre>
+<p>
+Gets an initialized PreciseWriter from the Pool.
+</p>
+</div>
+<h2 id="PreciseWriter.Initialize">func (*PreciseWriter) Initialize</h2>
+<div>
+<pre>func (pw *PreciseWriter) Initialize()
+</pre>
+<p>
+This function initializes the internal fields.
+This must be called before any use.
+</p>
+</div>
+<h2 id="PreciseWriter.PutToPool">func (*PreciseWriter) PutToPool</h2>
+<div>
+<pre>func (w *PreciseWriter) PutToPool()
+</pre>
+<p>
+Puts the PrecideWriter to the Pool, so it can be reallocated by PreciseWriterFromPool().
+</p>
+</div>
+<h2 id="PreciseWriter.WriteBlob">func (PreciseWriter) WriteBlob</h2>
+<div>
+<pre>func (pw PreciseWriter) WriteBlob(b []byte) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseWriter.WriteListLength">func (PreciseWriter) WriteListLength</h2>
+<div>
+<pre>func (pw PreciseWriter) WriteListLength(i int) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseWriter.WriteUvarint">func (PreciseWriter) WriteUvarint</h2>
+<div>
+<pre>func (pw PreciseWriter) WriteUvarint(i uint64) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PreciseWriter.WriteVarint">func (PreciseWriter) WriteVarint</h2>
+<div>
+<pre>func (pw PreciseWriter) WriteVarint(i int64) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader">type Reader</h2>
+<div>
+<pre>type Reader interface {
+	io.Reader
+	ReadByte() (byte, error)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Writer">type Writer</h2>
+<div>
+<pre>type Writer interface {
+	io.Writer
+	WriteByte(c byte) error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding/binary"</code></li><li><code>import "errors"</code></li><li><code>import "io"</code></li><li><code>import "sync"</code></li>
+{% include_relative list.html %}

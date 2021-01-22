@@ -1,0 +1,2 @@
+QuickDump, a PreciseIO based simple Serialization system, that is much easier to use
+than serializer.

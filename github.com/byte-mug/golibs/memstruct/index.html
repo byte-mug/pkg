@@ -1,0 +1,77 @@
+---
+layout: godoc
+title: memstruct
+gopkg: github.com/byte-mug/golibs/memstruct
+---
+<h1>Package memstruct</h1>
+<code>import "github.com/byte-mug/golibs/memstruct"</code><h2>Overview</h2>
+<div>
+<p>
+Implements orthogonal structures.
+</p>
+<pre>// total 22 bytes.
+type MyStructure struct {
+	Field1 *uint64 // 8 bytes
+	Field2 *int16  // 2 bytes
+	MyData []byte `bytes:&#34;12&#34;` // 12 bytes.
+}
+
+atype := memstruct.MakeAccessType(new(MyStructure))
+inst := atype.New()
+inst.SetBytes(make([]byte,22))
+ms := inst.Value().(*MyStructure)
+
+fmt.Println(*ms.Field1)
+fmt.Println(*ms.Field2)
+fmt.Println(ms.MyData)
+</pre>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#AccessType">type AccessType</a><br><ul>
+<li><a href="#MakeAccessType">	func MakeAccessType(i interface{}) AccessType</a></li>
+</ul></li>
+<li><a href="#Instance">type Instance</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="AccessType">type AccessType</h2>
+<div>
+<pre>type AccessType interface {
+	New() Instance
+	Len() int
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="MakeAccessType">func MakeAccessType</h2>
+<div>
+<pre>func MakeAccessType(i interface{}) AccessType
+</pre>
+<p>
+Supported types:
+</p>
+<pre>struct // instance.Value() returns *struct
+*int8
+*int16
+*int32
+*int64
+*uint8
+*uint16
+*uint32
+*uint64
+[]byte // only as struct-field with `bytes:&#34;...&#34;` tag.
+</pre>
+</div>
+<h2 id="Instance">type Instance</h2>
+<div>
+<pre>type Instance interface {
+	Value() interface{}
+	SetBytes([]byte)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "reflect"</code></li><li><code>import "strconv"</code></li><li><code>import "unsafe"</code></li>
+{% include_relative list.html %}

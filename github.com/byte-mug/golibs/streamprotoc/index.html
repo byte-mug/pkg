@@ -1,0 +1,182 @@
+---
+layout: godoc
+title: streamprotoc
+gopkg: github.com/byte-mug/golibs/streamprotoc
+---
+<h1>Package streamprotoc</h1>
+<code>import "github.com/byte-mug/golibs/streamprotoc"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#pkg-Variables">Variables</a></li><li><a href="#DecodeMessage">	func DecodeMessage(tr *textproto.Reader, msg Message) error</a></li>
+<li><a href="#EncodeMessage">	func EncodeMessage(tw *textproto.Writer, msg Message) error</a></li>
+<li><a href="#Client">type Client</a><br><ul>
+<li><a href="#NewClient">	func NewClient(c net.Conn) *Client</a></li>
+<li><a href="#Client.DoDeadline">	func (c *Client) DoDeadline(req, resp Message, dl time.Time) error</a></li>
+<li><a href="#Client.ReadMsg">	func (c *Client) ReadMsg(r *bufio.Reader) error</a></li>
+<li><a href="#Client.WriteMsg">	func (c *Client) WriteMsg(w *bufio.Writer) error</a></li>
+</ul></li>
+<li><a href="#Message">type Message</a><br><ul>
+</ul></li>
+<li><a href="#SendMessage">type SendMessage</a><br><ul>
+<li><a href="#SendMessage.ReadMsg">	func (s *SendMessage) ReadMsg(r *bufio.Reader) error</a></li>
+<li><a href="#SendMessage.WriteMsg">	func (s *SendMessage) WriteMsg(w *bufio.Writer) error</a></li>
+</ul></li>
+<li><a href="#Server">type Server</a><br><ul>
+<li><a href="#Server.Handle">	func (s *Server) Handle(c net.Conn)</a></li>
+</ul></li>
+<li><a href="#ServerConn">type ServerConn</a><br><ul>
+<li><a href="#ServerConn.WriteMessage">	func (c *ServerConn) WriteMessage(msg *SendMessage) error</a></li>
+</ul></li>
+</ul>
+<h2 id="pkg-Constants">Constants</h2>
+<div>
+<pre>const MZ1 = 12444583056938131134
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>const MZ2 = 7945676850369339463
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var EAgain = errors.New(&#34;Ooops, try again&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var ETimeout = errors.New(&#34;Deadline timed out&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DecodeMessage">func DecodeMessage</h2>
+<div>
+<pre>func DecodeMessage(tr *textproto.Reader, msg Message) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="EncodeMessage">func EncodeMessage</h2>
+<div>
+<pre>func EncodeMessage(tw *textproto.Writer, msg Message) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client">type Client</h2>
+<div>
+<pre>type Client struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewClient">func NewClient</h2>
+<div>
+<pre>func NewClient(c net.Conn) *Client
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.DoDeadline">func (*Client) DoDeadline</h2>
+<div>
+<pre>func (c *Client) DoDeadline(req, resp Message, dl time.Time) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.ReadMsg">func (*Client) ReadMsg</h2>
+<div>
+<pre>func (c *Client) ReadMsg(r *bufio.Reader) error
+</pre>
+<p>
+Don&#39;t call this method directly!
+</p>
+</div>
+<h2 id="Client.WriteMsg">func (*Client) WriteMsg</h2>
+<div>
+<pre>func (c *Client) WriteMsg(w *bufio.Writer) error
+</pre>
+<p>
+Don&#39;t call this method!
+</p>
+</div>
+<h2 id="Message">type Message</h2>
+<div>
+<pre>type Message interface {
+	WriteMsg(w *bufio.Writer) error
+	ReadMsg(r *bufio.Reader) error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="SendMessage">type SendMessage</h2>
+<div>
+<pre>type SendMessage struct {
+	Inner	Message
+	ConnID	uint64
+	ReqID	uint64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="SendMessage.ReadMsg">func (*SendMessage) ReadMsg</h2>
+<div>
+<pre>func (s *SendMessage) ReadMsg(r *bufio.Reader) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="SendMessage.WriteMsg">func (*SendMessage) WriteMsg</h2>
+<div>
+<pre>func (s *SendMessage) WriteMsg(w *bufio.Writer) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Server">type Server</h2>
+<div>
+<pre>type Server struct {
+	NewMessage	func() *SendMessage
+	Handler		func(r *SendMessage, c *ServerConn)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Server.Handle">func (*Server) Handle</h2>
+<div>
+<pre>func (s *Server) Handle(c net.Conn)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ServerConn">type ServerConn</h2>
+<div>
+<pre>type ServerConn struct {
+	*Server
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ServerConn.WriteMessage">func (*ServerConn) WriteMessage</h2>
+<div>
+<pre>func (c *ServerConn) WriteMessage(msg *SendMessage) error
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bufio"</code></li><li><code>import "bytes"</code></li><li><code>import "encoding/binary"</code></li><li><code>import "errors"</code></li><li><code>import "github.com/byte-mug/golibs/base128"</code></li><li><code>import "io"</code></li><li><code>import "io/ioutil"</code></li><li><code>import "math/rand"</code></li><li><code>import "net"</code></li><li><code>import "net/textproto"</code></li><li><code>import "sync"</code></li><li><code>import "time"</code></li>
+{% include_relative list.html %}

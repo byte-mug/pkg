@@ -1,0 +1,81 @@
+---
+layout: godoc
+title: bufferex
+gopkg: github.com/byte-mug/golibs/bufferex
+---
+<h1>Package bufferex</h1>
+<code>import "github.com/byte-mug/golibs/bufferex"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Binary">type Binary</a><br><ul>
+<li><a href="#AllocBinary">	func AllocBinary(n int) (b Binary)</a></li>
+<li><a href="#NewBinary">	func NewBinary(data []byte) (b Binary)</a></li>
+<li><a href="#NewBinaryInplace">	func NewBinaryInplace(data []byte) (b Binary)</a></li>
+<li><a href="#NewBinaryStr">	func NewBinaryStr(data string) (b Binary)</a></li>
+<li><a href="#Binary.BufferAllocUnit">	func (b Binary) BufferAllocUnit() *[]byte</a></li>
+<li><a href="#Binary.Bytes">	func (b Binary) Bytes() []byte</a></li>
+<li><a href="#Binary.Free">	func (b Binary) Free()</a></li>
+</ul></li>
+</ul>
+<h2 id="Binary">type Binary</h2>
+<div>
+<pre>type Binary struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="AllocBinary">func AllocBinary</h2>
+<div>
+<pre>func AllocBinary(n int) (b Binary)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewBinary">func NewBinary</h2>
+<div>
+<pre>func NewBinary(data []byte) (b Binary)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewBinaryInplace">func NewBinaryInplace</h2>
+<div>
+<pre>func NewBinaryInplace(data []byte) (b Binary)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewBinaryStr">func NewBinaryStr</h2>
+<div>
+<pre>func NewBinaryStr(data string) (b Binary)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Binary.BufferAllocUnit">func (Binary) BufferAllocUnit</h2>
+<div>
+<pre>func (b Binary) BufferAllocUnit() *[]byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Binary.Bytes">func (Binary) Bytes</h2>
+<div>
+<pre>func (b Binary) Bytes() []byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Binary.Free">func (Binary) Free</h2>
+<div>
+<pre>func (b Binary) Free()
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "github.com/byte-mug/golibs/buffer"</code></li>
+{% include_relative list.html %}

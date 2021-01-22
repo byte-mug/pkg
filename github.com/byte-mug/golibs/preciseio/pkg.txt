@@ -1,0 +1,2 @@
+Extended IO Routines to construct Serializers/Deserializers
+to directly operate on bufio-Reader/bufio-Writer.

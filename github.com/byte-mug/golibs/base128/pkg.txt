@@ -1,0 +1,1 @@
+A streaming interface to a Base128-Encoding
