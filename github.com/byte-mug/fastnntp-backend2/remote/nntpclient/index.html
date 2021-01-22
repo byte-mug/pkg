@@ -1,0 +1,226 @@
+---
+layout: godoc
+title: nntpclient
+gopkg: github.com/byte-mug/fastnntp-backend2/remote/nntpclient
+---
+<h1>Package nntpclient</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/remote/nntpclient"</code><h2>Overview</h2>
+<div>
+<p>
+Minimalistic Pipelined NNTP client.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#FinishDR">	func FinishDR(dr *fastnntp.DotReader)</a></li>
+<li><a href="#Connection">type Connection</a><br><ul>
+<li><a href="#NewConnection">	func NewConnection(rwc io.ReadWriteCloser) (c *Connection, err error)</a></li>
+<li><a href="#Connection.Article">	func (c *Connection) Article(args []byte, head, body bool, f func(dr *fastnntp.DotReader, msgid []byte)) (err error)</a></li>
+<li><a href="#Connection.ArticleInto">	func (c *Connection) ArticleInto(args []byte, head, body bool, t io.Writer) (msgid []byte, err error)</a></li>
+<li><a href="#Connection.Check">	func (c *Connection) Check(msgid []byte) (code int, err error)</a></li>
+<li><a href="#Connection.Close">	func (c *Connection) Close() (err error)</a></li>
+<li><a href="#Connection.Group">	func (c *Connection) Group(grp []byte) (num, low, high int64, err error)</a></li>
+<li><a href="#Connection.ListActive">	func (c *Connection) ListActive(f func(group []byte, high, low int64, status byte)) (err error)</a></li>
+<li><a href="#Connection.ListNewsgroups">	func (c *Connection) ListNewsgroups(f func(group []byte, descr []byte)) (err error)</a></li>
+<li><a href="#Connection.Listgroup">	func (c *Connection) Listgroup(f func(num int64), args interface{}) (err error)</a></li>
+<li><a href="#Connection.PostOrIhave">	func (c *Connection) PostOrIhave(msgid []byte, f Posting) (err error)</a></li>
+<li><a href="#Connection.Takethis">	func (c *Connection) Takethis(msgid []byte, f Posting) (code int, err error)</a></li>
+<li><a href="#Connection.Xover">	func (c *Connection) Xover(f XoverResp, msgno []byte) (err error)</a></li>
+</ul></li>
+<li><a href="#ErrNum">type ErrNum</a><br><ul>
+<li><a href="#ErrNum.Error">	func (e ErrNum) Error() (s string)</a></li>
+</ul></li>
+<li><a href="#Posting">type Posting</a><br><ul>
+</ul></li>
+<li><a href="#UnexpectedCode">type UnexpectedCode</a><br><ul>
+<li><a href="#UnexpectedCode.Error">	func (u *UnexpectedCode) Error() string</a></li>
+</ul></li>
+<li><a href="#XoverResp">type XoverResp</a><br><ul>
+</ul></li>
+</ul>
+<h2 id="pkg-Constants">Constants</h2>
+<div>
+<pre>const (
+	CheckOK			= 238	// Send article to be transferred
+	CheckNotPossible	= 431	// Transfer not possible; try again later
+	CheckNotWanted		= 438	// Article not wanted
+	TakethisOK		= 239
+	TakethisRejected	= 439
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="FinishDR">func FinishDR</h2>
+<div>
+<pre>func FinishDR(dr *fastnntp.DotReader)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Connection">type Connection</h2>
+<div>
+<pre>type Connection struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewConnection">func NewConnection</h2>
+<div>
+<pre>func NewConnection(rwc io.ReadWriteCloser) (c *Connection, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Connection.Article">func (*Connection) Article</h2>
+<div>
+<pre>func (c *Connection) Article(args []byte, head, body bool, f func(dr *fastnntp.DotReader, msgid []byte)) (err error)
+</pre>
+<p>
+Submits one of the following commands: ARTICLE, HEAD, BODY or STAT.
+</p>
+</div>
+<h2 id="Connection.ArticleInto">func (*Connection) ArticleInto</h2>
+<div>
+<pre>func (c *Connection) ArticleInto(args []byte, head, body bool, t io.Writer) (msgid []byte, err error)
+</pre>
+<p>
+Submits one of the following commands: ARTICLE, HEAD, BODY or STAT.
+</p>
+</div>
+<h2 id="Connection.Check">func (*Connection) Check</h2>
+<div>
+<pre>func (c *Connection) Check(msgid []byte) (code int, err error)
+</pre>
+<p>
+Checks whether or not an article is wanted.
+Requires RFC-4644 (The STREAMING Extension)
+</p>
+</div>
+<h2 id="Connection.Close">func (*Connection) Close</h2>
+<div>
+<pre>func (c *Connection) Close() (err error)
+</pre>
+<p>
+Closes the connection.
+Handle with care: Any further attempt to perform a request panics
+after the connection is closed using Close().
+</p>
+</div>
+<h2 id="Connection.Group">func (*Connection) Group</h2>
+<div>
+<pre>func (c *Connection) Group(grp []byte) (num, low, high int64, err error)
+</pre>
+<p>
+Selects a newsgroup.
+</p>
+</div>
+<h2 id="Connection.ListActive">func (*Connection) ListActive</h2>
+<div>
+<pre>func (c *Connection) ListActive(f func(group []byte, high, low int64, status byte)) (err error)
+</pre>
+<p>
+List all newsgroups.
+</p>
+</div>
+<h2 id="Connection.ListNewsgroups">func (*Connection) ListNewsgroups</h2>
+<div>
+<pre>func (c *Connection) ListNewsgroups(f func(group []byte, descr []byte)) (err error)
+</pre>
+<p>
+List all newsgroups.
+</p>
+</div>
+<h2 id="Connection.Listgroup">func (*Connection) Listgroup</h2>
+<div>
+<pre>func (c *Connection) Listgroup(f func(num int64), args interface{}) (err error)
+</pre>
+<p>
+EXPERIMENTAL, MAY CHANGE!
+Performs the LISTGROUP command.
+</p>
+</div>
+<h2 id="Connection.PostOrIhave">func (*Connection) PostOrIhave</h2>
+<div>
+<pre>func (c *Connection) PostOrIhave(msgid []byte, f Posting) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Connection.Takethis">func (*Connection) Takethis</h2>
+<div>
+<pre>func (c *Connection) Takethis(msgid []byte, f Posting) (code int, err error)
+</pre>
+<p>
+Posts an article using the TAKETHIS command.
+Requires RFC-4644 (The STREAMING Extension)
+</p>
+</div>
+<h2 id="Connection.Xover">func (*Connection) Xover</h2>
+<div>
+<pre>func (c *Connection) Xover(f XoverResp, msgno []byte) (err error)
+</pre>
+<p>
+Performs the XOVER command.
+</p>
+</div>
+<h2 id="ErrNum">type ErrNum</h2>
+<div>
+<pre>type ErrNum int
+</pre>
+<p>
+-</p>
+</div>
+<h3>Constants</h3>
+<div>
+<pre>const (
+	EMalformedResponse	ErrNum	= iota
+	EInvalidArgs
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ErrNum.Error">func (ErrNum) Error</h2>
+<div>
+<pre>func (e ErrNum) Error() (s string)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Posting">type Posting</h2>
+<div>
+<pre>type Posting func(dw *fastnntp.DotWriter)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="UnexpectedCode">type UnexpectedCode</h2>
+<div>
+<pre>type UnexpectedCode struct {
+	Expected	string
+	Got		string
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="UnexpectedCode.Error">func (*UnexpectedCode) Error</h2>
+<div>
+<pre>func (u *UnexpectedCode) Error() string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="XoverResp">type XoverResp</h2>
+<div>
+<pre>type XoverResp func(num int64, subject, from, date, msgId, refs []byte, lng, lines int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp"</code></li><li><code>import "io"</code></li><li><code>import "net/textproto"</code></li><li><code>import "regexp"</code></li><li><code>import "sync"</code></li></ul>
+
+{% include_relative list.html %}

@@ -1,0 +1,99 @@
+---
+layout: godoc
+title: newscaps
+gopkg: github.com/byte-mug/fastnntp-backend2/newscaps
+---
+<h1>Package newscaps</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/newscaps"</code><h2>Overview</h2>
+<div>
+<p>
+Fastnntp Caps implementations for (non-remote) newsreading.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#ArticleReader">type ArticleReader</a><br><ul>
+<li><a href="#ArticleReader.GetArticle">	func (ar *ArticleReader) GetArticle(a *fastnntp.Article, head, body bool) func(w *fastnntp.DotWriter)</a></li>
+<li><a href="#ArticleReader.StatArticle">	func (ar *ArticleReader) StatArticle(a *fastnntp.Article) bool</a></li>
+<li><a href="#ArticleReader.WriteOverview">	func (ar *ArticleReader) WriteOverview(a *fastnntp.ArticleRange) func(w fastnntp.IOverview)</a></li>
+</ul></li>
+<li><a href="#GroupReader">type GroupReader</a><br><ul>
+<li><a href="#GroupReader.CursorMoveGroup">	func (gr *GroupReader) CursorMoveGroup(g *fastnntp.Group, i int64, backward bool, id_buf []byte) (ni int64, id []byte, ok bool)</a></li>
+<li><a href="#GroupReader.GetGroup">	func (gr *GroupReader) GetGroup(g *fastnntp.Group) bool</a></li>
+<li><a href="#GroupReader.ListGroup">	func (gr *GroupReader) ListGroup(g *fastnntp.Group, w *fastnntp.DotWriter, first, last int64)</a></li>
+<li><a href="#GroupReader.ListGroups">	func (gr *GroupReader) ListGroups(wm *fastnntp.WildMat, ila fastnntp.IListActive) bool</a></li>
+</ul></li>
+</ul>
+<h2 id="ArticleReader">type ArticleReader</h2>
+<div>
+<pre>type ArticleReader struct {
+	SM	*storage.StorageManager
+	OV	storage.OverviewMethod
+	HIS	storage.HisMethod
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ArticleReader.GetArticle">func (*ArticleReader) GetArticle</h2>
+<div>
+<pre>func (ar *ArticleReader) GetArticle(a *fastnntp.Article, head, body bool) func(w *fastnntp.DotWriter)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ArticleReader.StatArticle">func (*ArticleReader) StatArticle</h2>
+<div>
+<pre>func (ar *ArticleReader) StatArticle(a *fastnntp.Article) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ArticleReader.WriteOverview">func (*ArticleReader) WriteOverview</h2>
+<div>
+<pre>func (ar *ArticleReader) WriteOverview(a *fastnntp.ArticleRange) func(w fastnntp.IOverview)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupReader">type GroupReader</h2>
+<div>
+<pre>type GroupReader struct {
+	GM	storage.GroupMethod
+	OV	storage.OverviewMethod
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupReader.CursorMoveGroup">func (*GroupReader) CursorMoveGroup</h2>
+<div>
+<pre>func (gr *GroupReader) CursorMoveGroup(g *fastnntp.Group, i int64, backward bool, id_buf []byte) (ni int64, id []byte, ok bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupReader.GetGroup">func (*GroupReader) GetGroup</h2>
+<div>
+<pre>func (gr *GroupReader) GetGroup(g *fastnntp.Group) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupReader.ListGroup">func (*GroupReader) ListGroup</h2>
+<div>
+<pre>func (gr *GroupReader) ListGroup(g *fastnntp.Group, w *fastnntp.DotWriter, first, last int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupReader.ListGroups">func (*GroupReader) ListGroups</h2>
+<div>
+<pre>func (gr *GroupReader) ListGroups(wm *fastnntp.WildMat, ila fastnntp.IListActive) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/iohelper"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "io/ioutil"</code></li></ul>
+
+{% include_relative list.html %}

@@ -1,0 +1,45 @@
+---
+layout: godoc
+title: tradgroup
+gopkg: github.com/byte-mug/fastnntp-backend2/storage/tradgroup
+---
+<h1>Package tradgroup</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/storage/tradgroup"</code><h2>Overview</h2>
+<div>
+<p>
+Implements a traditional newsgroup-listing solution. Based on the text files
+</p>
+<pre>active
+newsgroups
+</pre>
+<p>
+as provided by <a href="ftp://ftp.isc.org/pub/usenet/CONFIG/active">ftp://ftp.isc.org/pub/usenet/CONFIG/active</a>
+and <a href="ftp://ftp.isc.org/pub/usenet/CONFIG/newsgroups">ftp://ftp.isc.org/pub/usenet/CONFIG/newsgroups</a> respectively.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#TradGroup">type TradGroup</a><br><ul>
+<li><a href="#TradGroup.FetchGroups">	func (tg *TradGroup) FetchGroups(status, descr bool, ge *storage.GroupElement) (cur storage.Cursor, err error)</a></li>
+</ul></li>
+</ul>
+<h2 id="TradGroup">type TradGroup</h2>
+<div>
+<pre>type TradGroup struct {
+	ConfigPath	string	// path to the folder containing &#34;active&#34; and &#34;newsgroups&#34;
+	Decompress	string	// must be &#34;&#34;, &#34;.gz&#34;, or &#34;.bz2&#34;
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TradGroup.FetchGroups">func (*TradGroup) FetchGroups</h2>
+<div>
+<pre>func (tg *TradGroup) FetchGroups(status, descr bool, ge *storage.GroupElement) (cur storage.Cursor, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bufio"</code></li><li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/decompress"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "io"</code></li><li><code>import "os"</code></li><li><code>import "path/filepath"</code></li><li><code>import "regexp"</code></li></ul>
+
+{% include_relative list.html %}

@@ -1,0 +1,65 @@
+---
+layout: godoc
+title: poster
+gopkg: github.com/byte-mug/fastnntp-backend2/poster
+---
+<h1>Package poster</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/poster"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#OverviewMethodEx">type OverviewMethodEx</a><br><ul>
+</ul></li>
+<li><a href="#StorageWriter">type StorageWriter</a><br><ul>
+<li><a href="#StorageWriter.CheckPost">	func (c *StorageWriter) CheckPost() (possible bool)</a></li>
+<li><a href="#StorageWriter.CheckPostId">	func (c *StorageWriter) CheckPostId(id []byte) (wanted bool, possible bool)</a></li>
+<li><a href="#StorageWriter.PerformPost">	func (c *StorageWriter) PerformPost(id []byte, r *fastnntp.DotReader) (rejected bool, failed bool)</a></li>
+</ul></li>
+</ul>
+<h2 id="OverviewMethodEx">type OverviewMethodEx</h2>
+<div>
+<pre>type OverviewMethodEx interface {
+	GroupWrite(grp []byte, num int64, tk *storage.TOKEN, ove *storage.OverviewElement) (err error)
+	InitGroup(grp []byte) (err error)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageWriter">type StorageWriter</h2>
+<div>
+<pre>type StorageWriter struct {
+	Stamp	posting.Stamper
+	SM	*storage.StorageManager
+	OV	*ovldb.OvLDB
+	HIS	storage.HisMethod
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageWriter.CheckPost">func (*StorageWriter) CheckPost</h2>
+<div>
+<pre>func (c *StorageWriter) CheckPost() (possible bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageWriter.CheckPostId">func (*StorageWriter) CheckPostId</h2>
+<div>
+<pre>func (c *StorageWriter) CheckPostId(id []byte) (wanted bool, possible bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageWriter.PerformPost">func (*StorageWriter) PerformPost</h2>
+<div>
+<pre>func (c *StorageWriter) PerformPost(id []byte, r *fastnntp.DotReader) (rejected bool, failed bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bytes"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/iohelper"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage/ovldb"</code></li><li><code>import "github.com/byte-mug/fastnntp/posting"</code></li><li><code>import "io"</code></li><li><code>import "time"</code></li></ul>
+
+{% include_relative list.html %}

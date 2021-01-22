@@ -1,0 +1,360 @@
+---
+layout: godoc
+title: storage
+gopkg: github.com/byte-mug/fastnntp-backend2/storage
+---
+<h1>Package storage</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/storage"</code><h2>Overview</h2>
+<div>
+<p>
+Storage methods, modeled after the venerable INN usenet server.
+</p>
+<p>
+NOTE: All interfaces are WIP. Expect breaking changes.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#Bzero">	func Bzero(bs []byte)</a></li>
+<li><a href="#RegisterStorageLoader">	func RegisterStorageLoader(name string, ldr CfgStorageLoader)</a></li>
+<li><a href="#Article_MD">type Article_MD</a><br><ul>
+</ul></li>
+<li><a href="#Article_R">type Article_R</a><br><ul>
+</ul></li>
+<li><a href="#Article_W">type Article_W</a><br><ul>
+</ul></li>
+<li><a href="#CfgBaseInfo">type CfgBaseInfo</a><br><ul>
+</ul></li>
+<li><a href="#CfgStorage">type CfgStorage</a><br><ul>
+</ul></li>
+<li><a href="#CfgStorageLoader">type CfgStorageLoader</a><br><ul>
+</ul></li>
+<li><a href="#CfgStorageMethod">type CfgStorageMethod</a><br><ul>
+</ul></li>
+<li><a href="#Cursor">type Cursor</a><br><ul>
+</ul></li>
+<li><a href="#GroupElement">type GroupElement</a><br><ul>
+</ul></li>
+<li><a href="#GroupMethod">type GroupMethod</a><br><ul>
+</ul></li>
+<li><a href="#HisMethod">type HisMethod</a><br><ul>
+</ul></li>
+<li><a href="#OverviewElement">type OverviewElement</a><br><ul>
+<li><a href="#OverviewElement.Debug">	func (ove *OverviewElement) Debug() string</a></li>
+</ul></li>
+<li><a href="#OverviewMethod">type OverviewMethod</a><br><ul>
+</ul></li>
+<li><a href="#Releaser">type Releaser</a><br><ul>
+</ul></li>
+<li><a href="#SMFlags">type SMFlags</a><br><ul>
+</ul></li>
+<li><a href="#SMLevel">type SMLevel</a><br><ul>
+</ul></li>
+<li><a href="#StorageManager">type StorageManager</a><br><ul>
+<li><a href="#StorageManager.Open">	func (s *StorageManager) Open(bi *CfgBaseInfo) (err error)</a></li>
+<li><a href="#StorageManager.Retrieve">	func (s *StorageManager) Retrieve(t *TOKEN, sl SMLevel) (a Article_R, rs SMLevel, err error)</a></li>
+<li><a href="#StorageManager.SetMethods">	func (s *StorageManager) SetMethods(cfg *CfgStorage)</a></li>
+</ul></li>
+<li><a href="#StorageMethod">type StorageMethod</a><br><ul>
+</ul></li>
+<li><a href="#TOKEN">type TOKEN</a><br><ul>
+<li><a href="#TOKEN.Bytes">	func (t *TOKEN) Bytes() []byte</a></li>
+<li><a href="#TOKEN.Class">	func (t *TOKEN) Class() byte</a></li>
+<li><a href="#TOKEN.Debug">	func (t *TOKEN) Debug() string</a></li>
+</ul></li>
+</ul>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var ENotInitialized = errors.New(&#34;SM not Initialized&#34;)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Bzero">func Bzero</h2>
+<div>
+<pre>func Bzero(bs []byte)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RegisterStorageLoader">func RegisterStorageLoader</h2>
+<div>
+<pre>func RegisterStorageLoader(name string, ldr CfgStorageLoader)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Article_MD">type Article_MD</h2>
+<div>
+<pre>type Article_MD struct {
+	Arrival time.Time
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Article_R">type Article_R</h2>
+<div>
+<pre>type Article_R interface {
+	Releaser
+	io.WriterTo
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Article_W">type Article_W</h2>
+<div>
+<pre>type Article_W interface {
+	Releaser
+	io.Reader
+	io.WriterTo
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgBaseInfo">type CfgBaseInfo</h2>
+<div>
+<pre>type CfgBaseInfo struct {
+	Spool string `inn:&#34;$spool&#34;`
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgStorage">type CfgStorage</h2>
+<div>
+<pre>type CfgStorage struct {
+	Methods []*CfgStorageMethod `inn:&#34;@method&#34;`
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgStorageLoader">type CfgStorageLoader</h2>
+<div>
+<pre>type CfgStorageLoader func(cfg *CfgStorageMethod, bi *CfgBaseInfo) (StorageMethod, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgStorageMethod">type CfgStorageMethod</h2>
+<div>
+<pre>type CfgStorageMethod struct {
+	Method		string	`inn:&#34;$method&#34;`
+	Class		int	`inn:&#34;$class&#34;`
+	Newsgroups	string	`inn:&#34;$newsgroup&#34;`
+	Size		int64	`inn:&#34;$size&#34;`
+	MaxSize		int64	`inn:&#34;$max-size&#34; json:&#34;max-size&#34;`
+	Options		string	`inn:&#34;$options&#34;`
+	ExactMatch	bool	`inn:&#34;$exactmatch&#34;`
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Cursor">type Cursor</h2>
+<div>
+<pre>type Cursor interface {
+	Releaser
+	Next() bool
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupElement">type GroupElement</h2>
+<div>
+<pre>type GroupElement struct {
+	Group		[]byte
+	Status		byte
+	Description	[]byte
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupMethod">type GroupMethod</h2>
+<div>
+<pre>type GroupMethod interface {
+	FetchGroups(status, descr bool, ge *GroupElement) (cur Cursor, err error)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HisMethod">type HisMethod</h2>
+<div>
+<pre>type HisMethod interface {
+	HisWrite(msgid []byte, md *Article_MD, t *TOKEN) (err error)
+	HisLookup(msgid []byte, t *TOKEN) (err error)
+	HisCancel(msgid []byte) (err error)
+}
+</pre>
+<p>
+Inspired by INN&#39;s HIS(history) database.
+Maps message-ids to storage tokens.
+</p>
+</div>
+<h2 id="OverviewElement">type OverviewElement</h2>
+<div>
+<pre>type OverviewElement struct {
+	Num					int64
+	Subject, From, Date, MsgId, Refs	[]byte
+	Lng, Lines				int64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OverviewElement.Debug">func (*OverviewElement) Debug</h2>
+<div>
+<pre>func (ove *OverviewElement) Debug() string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OverviewMethod">type OverviewMethod</h2>
+<div>
+<pre>type OverviewMethod interface {
+	FetchOne(grp []byte, num int64, tk *TOKEN, ove *OverviewElement) (rel Releaser, err error)
+	FetchAll(grp []byte, num, lastnum int64, tk *TOKEN, ove *OverviewElement) (cur Cursor, err error)
+	SeekOne(grp []byte, num int64, back bool, tk *TOKEN, ove *OverviewElement) (rel Releaser, err error)
+	GroupStat(grp []byte) (num, low, high int64, err error)
+
+	// Writes a new Overview line into the database.
+	GroupWriteOv(grp []byte, autonum bool, md *Article_MD, tk *TOKEN, ove *OverviewElement) (err error)
+
+	// Initializes a group in the overview-database.
+	InitGroup(grp []byte) (err error)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Releaser">type Releaser</h2>
+<div>
+<pre>type Releaser interface {
+	Release()
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="SMFlags">type SMFlags</h2>
+<div>
+<pre>type SMFlags uint
+</pre>
+<p>
+-</p>
+</div>
+<h3>Constants</h3>
+<div>
+<pre>const (
+	SM_Expensivestat	SMFlags	= 1 &lt;&lt; iota
+	SM_Selfexpire
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="SMLevel">type SMLevel</h2>
+<div>
+<pre>type SMLevel uint
+</pre>
+<p>
+-</p>
+</div>
+<h3>Constants</h3>
+<div>
+<pre>const (
+	SM_Stat	SMLevel	= iota
+	SM_Head
+	SM_All
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageManager">type StorageManager</h2>
+<div>
+<pre>type StorageManager struct {
+	Classes	[256]StorageMethod
+	Methods	[256]*CfgStorageMethod
+
+	/*
+		Used by the Posting backend.
+		Will hold *fastnntp.WildMat objects.
+	*/
+	Wildmat	[256]interface{}
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageManager.Open">func (*StorageManager) Open</h2>
+<div>
+<pre>func (s *StorageManager) Open(bi *CfgBaseInfo) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageManager.Retrieve">func (*StorageManager) Retrieve</h2>
+<div>
+<pre>func (s *StorageManager) Retrieve(t *TOKEN, sl SMLevel) (a Article_R, rs SMLevel, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageManager.SetMethods">func (*StorageManager) SetMethods</h2>
+<div>
+<pre>func (s *StorageManager) SetMethods(cfg *CfgStorage)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="StorageMethod">type StorageMethod</h2>
+<div>
+<pre>type StorageMethod interface {
+	io.Closer
+
+	Store(md *Article_MD, a Article_W, t *TOKEN) (err error)
+	Retrieve(t *TOKEN, s SMLevel) (a Article_R, rs SMLevel, err error)
+	Cancel(t *TOKEN) (err error)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TOKEN">type TOKEN</h2>
+<div>
+<pre>type TOKEN [34]byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TOKEN.Bytes">func (*TOKEN) Bytes</h2>
+<div>
+<pre>func (t *TOKEN) Bytes() []byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TOKEN.Class">func (*TOKEN) Class</h2>
+<div>
+<pre>func (t *TOKEN) Class() byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TOKEN.Debug">func (*TOKEN) Debug</h2>
+<div>
+<pre>func (t *TOKEN) Debug() string
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "io"</code></li><li><code>import "strings"</code></li><li><code>import "time"</code></li></ul>
+
+{% include_relative list.html %}

@@ -1,0 +1,134 @@
+---
+layout: godoc
+title: ovldb
+gopkg: github.com/byte-mug/fastnntp-backend2/storage/ovldb
+---
+<h1>Package ovldb</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/storage/ovldb"</code><h2>Overview</h2>
+<div>
+<p>
+Stores overview data into a LevelDB database.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#OvKeyFormat">type OvKeyFormat</a><br><ul>
+<li><a href="#GetKF_V1">	func GetKF_V1() OvKeyFormat</a></li>
+</ul></li>
+<li><a href="#OvLDB">type OvLDB</a><br><ul>
+<li><a href="#OpenOvLDB">	func OpenOvLDB(path string) (*OvLDB, error)</a></li>
+<li><a href="#OpenSpoolOvLDB">	func OpenSpoolOvLDB(spool string, o *opt.Options) (*OvLDB, error)</a></li>
+<li><a href="#OvLDB.FetchAll">	func (ov *OvLDB) FetchAll(grp []byte, num, lastnum int64, tk *storage.TOKEN, ove *storage.OverviewElement) (cur storage.Cursor, err error)</a></li>
+<li><a href="#OvLDB.FetchOne">	func (ov *OvLDB) FetchOne(grp []byte, num int64, tk *storage.TOKEN, ove *storage.OverviewElement) (rel storage.Releaser, err error)</a></li>
+<li><a href="#OvLDB.GroupStat">	func (ov *OvLDB) GroupStat(grp []byte) (num, low, high int64, err error)</a></li>
+<li><a href="#OvLDB.GroupWriteOv">	func (ov *OvLDB) GroupWriteOv(grp []byte, autonum bool, md *storage.Article_MD, tk *storage.TOKEN, ove *storage.OverviewElement) (err error)</a></li>
+<li><a href="#OvLDB.InitGroup">	func (ov *OvLDB) InitGroup(grp []byte) (err error)</a></li>
+<li><a href="#OvLDB.SeekOne">	func (ov *OvLDB) SeekOne(grp []byte, num int64, back bool, tk *storage.TOKEN, ove *storage.OverviewElement) (rel storage.Releaser, err error)</a></li>
+</ul></li>
+<li><a href="#OvValFormat">type OvValFormat</a><br><ul>
+<li><a href="#GetVF_V1">	func GetVF_V1() OvValFormat</a></li>
+</ul></li>
+</ul>
+<h2 id="OvKeyFormat">type OvKeyFormat</h2>
+<div>
+<pre>type OvKeyFormat interface {
+	// contains filtered or unexported methods
+}
+</pre>
+<p>
+Handles the format of the LevelDB keys.
+</p>
+</div>
+<h2 id="GetKF_V1">func GetKF_V1</h2>
+<div>
+<pre>func GetKF_V1() OvKeyFormat
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB">type OvLDB</h2>
+<div>
+<pre>type OvLDB struct {
+	OvKeyFormat
+	OvValFormat
+	DB	*leveldb.DB
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OpenOvLDB">func OpenOvLDB</h2>
+<div>
+<pre>func OpenOvLDB(path string) (*OvLDB, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OpenSpoolOvLDB">func OpenSpoolOvLDB</h2>
+<div>
+<pre>func OpenSpoolOvLDB(spool string, o *opt.Options) (*OvLDB, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.FetchAll">func (*OvLDB) FetchAll</h2>
+<div>
+<pre>func (ov *OvLDB) FetchAll(grp []byte, num, lastnum int64, tk *storage.TOKEN, ove *storage.OverviewElement) (cur storage.Cursor, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.FetchOne">func (*OvLDB) FetchOne</h2>
+<div>
+<pre>func (ov *OvLDB) FetchOne(grp []byte, num int64, tk *storage.TOKEN, ove *storage.OverviewElement) (rel storage.Releaser, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.GroupStat">func (*OvLDB) GroupStat</h2>
+<div>
+<pre>func (ov *OvLDB) GroupStat(grp []byte) (num, low, high int64, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.GroupWriteOv">func (*OvLDB) GroupWriteOv</h2>
+<div>
+<pre>func (ov *OvLDB) GroupWriteOv(grp []byte, autonum bool, md *storage.Article_MD, tk *storage.TOKEN, ove *storage.OverviewElement) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.InitGroup">func (*OvLDB) InitGroup</h2>
+<div>
+<pre>func (ov *OvLDB) InitGroup(grp []byte) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvLDB.SeekOne">func (*OvLDB) SeekOne</h2>
+<div>
+<pre>func (ov *OvLDB) SeekOne(grp []byte, num int64, back bool, tk *storage.TOKEN, ove *storage.OverviewElement) (rel storage.Releaser, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OvValFormat">type OvValFormat</h2>
+<div>
+<pre>type OvValFormat interface {
+	// contains filtered or unexported methods
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GetVF_V1">func GetVF_V1</h2>
+<div>
+<pre>func GetVF_V1() OvValFormat
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding/binary"</code></li><li><code>import "errors"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/utils/minihash"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb/iterator"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb/opt"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb/util"</code></li><li><code>import "io"</code></li><li><code>import "path/filepath"</code></li><li><code>import "sync"</code></li></ul>
+
+{% include_relative list.html %}

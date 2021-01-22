@@ -1,0 +1,119 @@
+---
+layout: godoc
+title: mntpc
+gopkg: github.com/byte-mug/fastnntp-backend2/remote/mntp
+---
+<h1>Package mntpc</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/remote/mntp"</code><h2>Overview</h2>
+<div>
+<p>
+MNTP: Minimalistic News Transfer Protocol.
+MNTP is a wire protocol that is kind of a sibling to NNTP. It is meant to offer
+an efficient means of communication between the Frontend server and the backend.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#ConsumeRelease">	func ConsumeRelease(r *fastnntp.DotReader)</a></li>
+<li><a href="#ServeConn">	func ServeConn(conn io.ReadWriteCloser, rh fastnntp.Handler)</a></li>
+<li><a href="#Client">type Client</a><br><ul>
+<li><a href="#NewClient">	func NewClient(conn io.ReadWriteCloser) (c *Client)</a></li>
+<li><a href="#Client.CheckPost">	func (c *Client) CheckPost() (possible bool)</a></li>
+<li><a href="#Client.CheckPostId">	func (c *Client) CheckPostId(id []byte) (wanted bool, possible bool)</a></li>
+<li><a href="#Client.GetArticle">	func (c *Client) GetArticle(a *fastnntp.Article, head, body bool) func(w *fastnntp.DotWriter)</a></li>
+<li><a href="#Client.GetArticleInto">	func (c *Client) GetArticleInto(a *fastnntp.Article, head, body bool, targ io.Writer) bool</a></li>
+<li><a href="#Client.PerformPost">	func (c *Client) PerformPost(id []byte, r *fastnntp.DotReader) (rejected bool, failed bool)</a></li>
+<li><a href="#Client.StatArticle">	func (c *Client) StatArticle(a *fastnntp.Article) bool</a></li>
+<li><a href="#Client.WriteOverview">	func (c *Client) WriteOverview(ar *fastnntp.ArticleRange) func(w fastnntp.IOverview)</a></li>
+<li><a href="#Client.WriteOverviewInto">	func (c *Client) WriteOverviewInto(a *fastnntp.ArticleRange, w fastnntp.IOverview)</a></li>
+</ul></li>
+</ul>
+<h2 id="ConsumeRelease">func ConsumeRelease</h2>
+<div>
+<pre>func ConsumeRelease(r *fastnntp.DotReader)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ServeConn">func ServeConn</h2>
+<div>
+<pre>func ServeConn(conn io.ReadWriteCloser, rh fastnntp.Handler)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client">type Client</h2>
+<div>
+<pre>type Client struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NewClient">func NewClient</h2>
+<div>
+<pre>func NewClient(conn io.ReadWriteCloser) (c *Client)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.CheckPost">func (*Client) CheckPost</h2>
+<div>
+<pre>func (c *Client) CheckPost() (possible bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.CheckPostId">func (*Client) CheckPostId</h2>
+<div>
+<pre>func (c *Client) CheckPostId(id []byte) (wanted bool, possible bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.GetArticle">func (*Client) GetArticle</h2>
+<div>
+<pre>func (c *Client) GetArticle(a *fastnntp.Article, head, body bool) func(w *fastnntp.DotWriter)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.GetArticleInto">func (*Client) GetArticleInto</h2>
+<div>
+<pre>func (c *Client) GetArticleInto(a *fastnntp.Article, head, body bool, targ io.Writer) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.PerformPost">func (*Client) PerformPost</h2>
+<div>
+<pre>func (c *Client) PerformPost(id []byte, r *fastnntp.DotReader) (rejected bool, failed bool)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.StatArticle">func (*Client) StatArticle</h2>
+<div>
+<pre>func (c *Client) StatArticle(a *fastnntp.Article) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.WriteOverview">func (*Client) WriteOverview</h2>
+<div>
+<pre>func (c *Client) WriteOverview(ar *fastnntp.ArticleRange) func(w fastnntp.IOverview)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Client.WriteOverviewInto">func (*Client) WriteOverviewInto</h2>
+<div>
+<pre>func (c *Client) WriteOverviewInto(a *fastnntp.ArticleRange, w fastnntp.IOverview)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bytes"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp"</code></li><li><code>import "io"</code></li><li><code>import "net/textproto"</code></li><li><code>import "sync"</code></li></ul>
+
+{% include_relative list.html %}

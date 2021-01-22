@@ -1,0 +1,1 @@
+MNTP: Minimalistic News Transfer Protocol.

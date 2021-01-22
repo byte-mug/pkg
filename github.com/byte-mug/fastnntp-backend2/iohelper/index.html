@@ -1,0 +1,66 @@
+---
+layout: godoc
+title: iohelper
+gopkg: github.com/byte-mug/fastnntp-backend2/iohelper
+---
+<h1>Package iohelper</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/iohelper"</code><h2>Overview</h2>
+<div>
+<p>
+IO Helper routines and structures.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Chopper">type Chopper</a><br><ul>
+<li><a href="#Chopper.Write">	func (c *Chopper) Write(p []byte) (n int, err error)</a></li>
+</ul></li>
+<li><a href="#Splitter">type Splitter</a><br><ul>
+<li><a href="#Splitter.Write">	func (s *Splitter) Write(p []byte) (n int, err error)</a></li>
+</ul></li>
+</ul>
+<h2 id="Chopper">type Chopper</h2>
+<div>
+<pre>type Chopper struct {
+	Rest io.Writer
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+Chopper chops off the first leading &#34;\r\n&#34; or &#34;\n&#34;
+</p>
+</div>
+<h2 id="Chopper.Write">func (*Chopper) Write</h2>
+<div>
+<pre>func (c *Chopper) Write(p []byte) (n int, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Splitter">type Splitter</h2>
+<div>
+<pre>type Splitter struct {
+	Head	io.Writer
+	Body	io.Writer
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+Splitter is a writer, that splits a RFC-822 style message into Header and Body.
+The algorithm is oppinionated, as it assumes that every &#39;\r&#39; is followed by
+an &#39;\n&#39;.
+</p>
+<p>
+Note that the body starts with a newline (&#34;\n&#34; or &#34;\r\n&#34;)!
+</p>
+</div>
+<h2 id="Splitter.Write">func (*Splitter) Write</h2>
+<div>
+<pre>func (s *Splitter) Write(p []byte) (n int, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "errors"</code></li><li><code>import "io"</code></li></ul>
+
+{% include_relative list.html %}

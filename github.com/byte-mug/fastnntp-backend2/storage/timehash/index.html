@@ -1,0 +1,82 @@
+---
+layout: godoc
+title: timehash
+gopkg: github.com/byte-mug/fastnntp-backend2/storage/timehash
+---
+<h1>Package timehash</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/storage/timehash"</code><h2>Overview</h2>
+<div>
+<p>
+Implements a traditional storage method, where each article is stored in a
+separate file.
+</p>
+<p>
+in the TIMEHASH method, each file is named:
+</p>
+<pre>&lt;spoolpath&gt;/time-nn/zzbb/cc/yyyy-aadd
+</pre>
+<p>
+Where &#34;nn&#34; is the hexadecimal value of the storage-class value, and &#34;zzbb&#34;,
+&#34;cc&#34; and &#34;aadd&#34; are components of the arrival time in hexadecimal. The arrival
+time, in seconds since the epoch is converted to hexadecimal and interpreted as
+0xzzaabbccdd. &#34;yyyy&#34; is the serial number.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#LoadSM">	func LoadSM(cfg *storage.CfgStorageMethod, bi *storage.CfgBaseInfo) (storage.StorageMethod, error)</a></li>
+<li><a href="#TimeHashSpool">type TimeHashSpool</a><br><ul>
+<li><a href="#TimeHashSpool.Cancel">	func (sm *TimeHashSpool) Cancel(t *storage.TOKEN) (err error)</a></li>
+<li><a href="#TimeHashSpool.Close">	func (sm *TimeHashSpool) Close() error</a></li>
+<li><a href="#TimeHashSpool.Retrieve">	func (sm *TimeHashSpool) Retrieve(t *storage.TOKEN, s storage.SMLevel) (a storage.Article_R, rs storage.SMLevel, err error)</a></li>
+<li><a href="#TimeHashSpool.Store">	func (sm *TimeHashSpool) Store(md *storage.Article_MD, a storage.Article_W, t *storage.TOKEN) (err error)</a></li>
+</ul></li>
+</ul>
+<h2 id="LoadSM">func LoadSM</h2>
+<div>
+<pre>func LoadSM(cfg *storage.CfgStorageMethod, bi *storage.CfgBaseInfo) (storage.StorageMethod, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TimeHashSpool">type TimeHashSpool</h2>
+<div>
+<pre>type TimeHashSpool struct {
+	SpoolPath string
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TimeHashSpool.Cancel">func (*TimeHashSpool) Cancel</h2>
+<div>
+<pre>func (sm *TimeHashSpool) Cancel(t *storage.TOKEN) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TimeHashSpool.Close">func (*TimeHashSpool) Close</h2>
+<div>
+<pre>func (sm *TimeHashSpool) Close() error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TimeHashSpool.Retrieve">func (*TimeHashSpool) Retrieve</h2>
+<div>
+<pre>func (sm *TimeHashSpool) Retrieve(t *storage.TOKEN, s storage.SMLevel) (a storage.Article_R, rs storage.SMLevel, err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="TimeHashSpool.Store">func (*TimeHashSpool) Store</h2>
+<div>
+<pre>func (sm *TimeHashSpool) Store(md *storage.Article_MD, a storage.Article_W, t *storage.TOKEN) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "encoding/binary"</code></li><li><code>import "fmt"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "io"</code></li><li><code>import "os"</code></li><li><code>import "path/filepath"</code></li><li><code>import "sync/atomic"</code></li></ul>
+
+{% include_relative list.html %}

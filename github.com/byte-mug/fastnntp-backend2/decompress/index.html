@@ -1,0 +1,52 @@
+---
+layout: godoc
+title: decompress
+gopkg: github.com/byte-mug/fastnntp-backend2/decompress
+---
+<h1>Package decompress</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/decompress"</code><h2>Overview</h2>
+<div>
+<p>
+A decompression plugin system. This is used for the TRADGROUP code, because
+&lt;CONFIG&gt;/active and &lt;CONFIG&gt;/newsgroups have compressed counterparts,
+one in the &#34;.bz2&#34; format and one in &#34;.gz&#34;, which should be supported.
+</p>
+<p>
+Also, i prefer to use github.com/klauspost/compress for more speed.
+</p>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#Register">	func Register(ext string, deco Decoder, prio int)</a></li>
+<li><a href="#Decoder">type Decoder</a><br><ul>
+<li><a href="#Get">	func Get(ext string) Decoder</a></li>
+</ul></li>
+</ul>
+<h2 id="Register">func Register</h2>
+<div>
+<pre>func Register(ext string, deco Decoder, prio int)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Decoder">type Decoder</h2>
+<div>
+<pre>type Decoder func(io.ReadCloser) (io.ReadCloser, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Get">func Get</h2>
+<div>
+<pre>func Get(ext string) Decoder
+</pre>
+<p>
+Returns the matching Decoder or nil if not supported.
+</p>
+<p>
+ext is the file extension like &#34;.gz&#34;, &#34;.bz2&#34;, or, if no compression is used, &#34;&#34;.
+</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "io"</code></li><li><code>import "strings"</code></li></ul>
+
+{% include_relative list.html %}

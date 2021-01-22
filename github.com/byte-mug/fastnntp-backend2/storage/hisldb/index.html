@@ -1,0 +1,58 @@
+---
+layout: godoc
+title: hisldb
+gopkg: github.com/byte-mug/fastnntp-backend2/storage/hisldb
+---
+<h1>Package hisldb</h1>
+<code>import "github.com/byte-mug/fastnntp-backend2/storage/hisldb"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#HisLdb">type HisLdb</a><br><ul>
+<li><a href="#OpenSpoolHisLdb">	func OpenSpoolHisLdb(spool string, o *opt.Options) (*HisLdb, error)</a></li>
+<li><a href="#HisLdb.HisCancel">	func (s *HisLdb) HisCancel(msgid []byte) (err error)</a></li>
+<li><a href="#HisLdb.HisLookup">	func (s *HisLdb) HisLookup(msgid []byte, t *storage.TOKEN) (err error)</a></li>
+<li><a href="#HisLdb.HisWrite">	func (s *HisLdb) HisWrite(msgid []byte, md *storage.Article_MD, t *storage.TOKEN) (err error)</a></li>
+</ul></li>
+</ul>
+<h2 id="HisLdb">type HisLdb</h2>
+<div>
+<pre>type HisLdb struct {
+	DB *leveldb.DB
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OpenSpoolHisLdb">func OpenSpoolHisLdb</h2>
+<div>
+<pre>func OpenSpoolHisLdb(spool string, o *opt.Options) (*HisLdb, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HisLdb.HisCancel">func (*HisLdb) HisCancel</h2>
+<div>
+<pre>func (s *HisLdb) HisCancel(msgid []byte) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HisLdb.HisLookup">func (*HisLdb) HisLookup</h2>
+<div>
+<pre>func (s *HisLdb) HisLookup(msgid []byte, t *storage.TOKEN) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HisLdb.HisWrite">func (*HisLdb) HisWrite</h2>
+<div>
+<pre>func (s *HisLdb) HisWrite(msgid []byte, md *storage.Article_MD, t *storage.TOKEN) (err error)
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "errors"</code></li><li><code>import "github.com/byte-mug/fastnntp-backend2/storage"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb"</code></li><li><code>import "github.com/syndtr/goleveldb/leveldb/opt"</code></li><li><code>import "path/filepath"</code></li></ul>
+
+{% include_relative list.html %}

@@ -1,0 +1,2 @@
+Implements a traditional storage method, where each article is stored in a
+separate file.

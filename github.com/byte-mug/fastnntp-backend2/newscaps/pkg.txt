@@ -1,0 +1,1 @@
+Fastnntp Caps implementations for (non-remote) newsreading.
