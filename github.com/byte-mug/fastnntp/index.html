@@ -1,0 +1,798 @@
+---
+layout: godoc
+title: fastnntp
+gopkg: github.com/byte-mug/fastnntp
+---
+<h1>Package fastnntp</h1>
+<code>import "github.com/byte-mug/fastnntp"</code><h2>Overview</h2>
+<div>
+</div>
+<h2>Index</h2>
+<ul><li><a href="#pkg-Constants">Constants</a></li><li><a href="#pkg-Variables">Variables</a></li><li><a href="#AcquireBufferedWriter">	func AcquireBufferedWriter(w io.Writer) (bw *bufio.Writer)</a></li>
+<li><a href="#AppendUint">	func AppendUint(dst []byte, n int64) []byte</a></li>
+<li><a href="#ParseRange">	func ParseRange(src []byte) (int64, int64)</a></li>
+<li><a href="#ParseUint">	func ParseUint(src []byte) (i int64)</a></li>
+<li><a href="#ReleaseBufferedWriter">	func ReleaseBufferedWriter(bw *bufio.Writer)</a></li>
+<li><a href="#Article">type Article</a><br><ul>
+</ul></li>
+<li><a href="#ArticleCaps">type ArticleCaps</a><br><ul>
+</ul></li>
+<li><a href="#ArticleRange">type ArticleRange</a><br><ul>
+</ul></li>
+<li><a href="#DotReader">type DotReader</a><br><ul>
+<li><a href="#DotReader.Consume">	func (d *DotReader) Consume()</a></li>
+<li><a href="#DotReader.Read">	func (d *DotReader) Read(b []byte) (int, error)</a></li>
+<li><a href="#DotReader.Release">	func (r *DotReader) Release()</a></li>
+</ul></li>
+<li><a href="#DotWriter">type DotWriter</a><br><ul>
+<li><a href="#AcquireDotWriter">	func AcquireDotWriter() *DotWriter</a></li>
+<li><a href="#DotWriter.Close">	func (w *DotWriter) Close() (e error)</a></li>
+<li><a href="#DotWriter.Release">	func (w *DotWriter) Release()</a></li>
+<li><a href="#DotWriter.Reset">	func (w *DotWriter) Reset(wr io.Writer)</a></li>
+<li><a href="#DotWriter.Write">	func (w *DotWriter) Write(buf []byte) (int, error)</a></li>
+</ul></li>
+<li><a href="#Group">type Group</a><br><ul>
+</ul></li>
+<li><a href="#GroupCaps">type GroupCaps</a><br><ul>
+</ul></li>
+<li><a href="#GroupListingCaps">type GroupListingCaps</a><br><ul>
+</ul></li>
+<li><a href="#Handler">type Handler</a><br><ul>
+<li><a href="#Handler.ServeConn">	func (h *Handler) ServeConn(conn io.ReadWriteCloser) error</a></li>
+</ul></li>
+<li><a href="#HeadBodyWriter">type HeadBodyWriter</a><br><ul>
+<li><a href="#AcquireHeadBodyWriter">	func AcquireHeadBodyWriter() *HeadBodyWriter</a></li>
+<li><a href="#HeadBodyWriter.Release">	func (w *HeadBodyWriter) Release()</a></li>
+<li><a href="#HeadBodyWriter.Reset">	func (w *HeadBodyWriter) Reset(head, body io.Writer)</a></li>
+<li><a href="#HeadBodyWriter.Write">	func (w *HeadBodyWriter) Write(buf []byte) (int, error)</a></li>
+</ul></li>
+<li><a href="#IListActive">type IListActive</a><br><ul>
+</ul></li>
+<li><a href="#IOverview">type IOverview</a><br><ul>
+</ul></li>
+<li><a href="#ListActive">type ListActive</a><br><ul>
+<li><a href="#ListActive.GetListActiveMode">	func (ov *ListActive) GetListActiveMode() ListActiveMode</a></li>
+<li><a href="#ListActive.WriteActive">	func (ov *ListActive) WriteActive(group []byte, high, low int64, status byte) error</a></li>
+<li><a href="#ListActive.WriteFullInfo">	func (ov *ListActive) WriteFullInfo(group []byte, high, low int64, status byte, description []byte) error</a></li>
+<li><a href="#ListActive.WriteNewsgroups">	func (ov *ListActive) WriteNewsgroups(group []byte, description []byte) error</a></li>
+</ul></li>
+<li><a href="#ListActiveMode">type ListActiveMode</a><br><ul>
+</ul></li>
+<li><a href="#LoginCaps">type LoginCaps</a><br><ul>
+</ul></li>
+<li><a href="#LoginPriv">type LoginPriv</a><br><ul>
+</ul></li>
+<li><a href="#NNTPError">type NNTPError</a><br><ul>
+</ul></li>
+<li><a href="#Overview">type Overview</a><br><ul>
+<li><a href="#Overview.WriteEntry">	func (ov *Overview) WriteEntry(num int64, subject, from, date, msgId, refs []byte, lng, lines int64) error</a></li>
+</ul></li>
+<li><a href="#PostingCaps">type PostingCaps</a><br><ul>
+</ul></li>
+<li><a href="#Reader">type Reader</a><br><ul>
+<li><a href="#AcquireReader">	func AcquireReader() *Reader</a></li>
+<li><a href="#Reader.DotReader">	func (r *Reader) DotReader() (d *DotReader)</a></li>
+<li><a href="#Reader.Init">	func (r *Reader) Init(rdr io.Reader) *Reader</a></li>
+<li><a href="#Reader.Read">	func (r *Reader) Read(b []byte) (int, error)</a></li>
+<li><a href="#Reader.ReadLineB">	func (r *Reader) ReadLineB(ext []byte) ([]byte, error)</a></li>
+<li><a href="#Reader.Release">	func (r *Reader) Release()</a></li>
+</ul></li>
+<li><a href="#WildMat">type WildMat</a><br><ul>
+<li><a href="#ParseWildMat">	func ParseWildMat(wm string) *WildMat</a></li>
+<li><a href="#ParseWildMatBinary">	func ParseWildMatBinary(wm []byte) *WildMat</a></li>
+<li><a href="#WildMat.Compile">	func (wmrs *WildMat) Compile() error</a></li>
+<li><a href="#WildMat.Match">	func (wmrs *WildMat) Match(s []byte) bool</a></li>
+<li><a href="#WildMat.MatchString">	func (wmrs *WildMat) MatchString(s string) bool</a></li>
+<li><a href="#WildMat.String">	func (wmrs *WildMat) String() string</a></li>
+</ul></li>
+<li><a href="#WildMatRuleSet">type WildMatRuleSet</a><br><ul>
+<li><a href="#WildMatRuleSet.Compile">	func (wmrs *WildMatRuleSet) Compile() (e error)</a></li>
+<li><a href="#WildMatRuleSet.Match">	func (wmrs *WildMatRuleSet) Match(s []byte) bool</a></li>
+<li><a href="#WildMatRuleSet.MatchString">	func (wmrs *WildMatRuleSet) MatchString(s string) bool</a></li>
+</ul></li>
+</ul>
+<h2 id="pkg-Constants">Constants</h2>
+<div>
+<pre>const (
+	LAM_Full	= ListActiveMode(iota)
+	LAM_Active
+	LAM_Newsgroups
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="pkg-Variables">Variables</h2>
+<div>
+<pre>var DefaultCaps = new(defCaps)
+</pre>
+<p>
+-</p>
+</div>
+<div>
+<pre>var ErrAuthRejected = &amp;NNTPError{452, &#34;authorization rejected&#34;}
+</pre>
+<p>
+ErrAuthRejected is returned for invalid authentication.
+</p>
+</div>
+<div>
+<pre>var ErrAuthRequired = &amp;NNTPError{450, &#34;authorization required&#34;}
+</pre>
+<p>
+ErrAuthRequired is returned to indicate authentication is required
+to proceed.
+</p>
+</div>
+<div>
+<pre>var ErrIHaveFailed = &amp;NNTPError{436, &#34;Transfer failed; try again later&#34;}
+</pre>
+<p>
+ErrIHaveFailed is returned when an attempt to ihave an article fails
+AFTER the transfer of the article.
+</p>
+</div>
+<div>
+<pre>var ErrIHaveNotPossible = &amp;NNTPError{436, &#34;Transfer not possible; try again later&#34;}
+</pre>
+<p>
+ErrIHaveNopPossible is the same as ErrIHaveFailed, except the text.
+ErrIHaveNopPossible is returned when an attempt to ihave an article fails
+BEFORE the transfer of the article.
+</p>
+</div>
+<div>
+<pre>var ErrIHaveRejected = &amp;NNTPError{437, &#34;Transfer rejected; do not retry&#34;}
+</pre>
+<p>
+ErrIHaveRejected is returned when an attempt to ihave an article is
+rejected due the server not wanting the article.
+</p>
+</div>
+<div>
+<pre>var ErrInvalidArticleNumber = &amp;NNTPError{423, &#34;No article with that number&#34;}
+</pre>
+<p>
+ErrInvalidArticleNumber is returned when an article is requested that can&#39;t be found.
+</p>
+</div>
+<div>
+<pre>var ErrInvalidArticleRange = &amp;NNTPError{423, &#34;No articles in that range&#34;}
+</pre>
+<p>
+ErrInvalidArticleNumber with other text
+</p>
+</div>
+<div>
+<pre>var ErrInvalidMessageID = &amp;NNTPError{430, &#34;No article with that message-id&#34;}
+</pre>
+<p>
+ErrInvalidMessageID is returned when a message is requested that can&#39;t be found.
+</p>
+</div>
+<div>
+<pre>var ErrNoCurrentArticle = &amp;NNTPError{420, &#34;Current article number is invalid&#34;}
+</pre>
+<p>
+ErrNoCurrentArticle is returned when a command is executed that
+requires a current article when one has not been selected.
+</p>
+</div>
+<div>
+<pre>var ErrNoGroupSelected = &amp;NNTPError{412, &#34;No newsgroup selected&#34;}
+</pre>
+<p>
+ErrNoSuchGroup is returned for a request that requires a current
+group when none has been selected.
+</p>
+</div>
+<div>
+<pre>var ErrNoNextArticle = &amp;NNTPError{421, &#34;No next article to retrieve&#34;}
+</pre>
+<p>
+ErrNoNextArticle is returned when LAST or NEXT reaches the end of its iteration
+</p>
+</div>
+<div>
+<pre>var ErrNoPreviousArticle = &amp;NNTPError{422, &#34;No previous article to retrieve&#34;}
+</pre>
+<p>
+ErrNoPreviousArticle is returned when LAST or NEXT reaches the end of its iteration
+</p>
+</div>
+<div>
+<pre>var ErrNoSuchGroup = &amp;NNTPError{411, &#34;No such newsgroup&#34;}
+</pre>
+<p>
+ErrNoSuchGroup is returned for a request for a group that can&#39;t be found.
+</p>
+</div>
+<div>
+<pre>var ErrNotAuthenticated = &amp;NNTPError{480, &#34;authentication required&#34;}
+</pre>
+<p>
+ErrNotAuthenticated is returned when a command is issued that requires
+authentication, but authentication was not provided.
+</p>
+</div>
+<div>
+<pre>var ErrNotWanted = &amp;NNTPError{435, &#34;Article not wanted&#34;}
+</pre>
+<p>
+ErrNotWanted is returned when an attempt to ihave an article is
+rejected due the server not wanting the article.
+</p>
+</div>
+<div>
+<pre>var ErrPostingFailed = &amp;NNTPError{441, &#34;posting failed&#34;}
+</pre>
+<p>
+ErrPostingFailed is returned when an attempt to post an article fails.
+</p>
+</div>
+<div>
+<pre>var ErrPostingNotPermitted = &amp;NNTPError{440, &#34;Posting not permitted&#34;}
+</pre>
+<p>
+ErrPostingNotPermitted is returned as the response to an attempt to
+post an article where posting is not permitted.
+</p>
+</div>
+<div>
+<pre>var ErrSyntax = &amp;NNTPError{501, &#34;not supported, or syntax error&#34;}
+</pre>
+<p>
+ErrSyntax is returned when a command can&#39;t be parsed.
+</p>
+</div>
+<div>
+<pre>var ErrUnknownCommand = &amp;NNTPError{500, &#34;Unknown command&#34;}
+</pre>
+<p>
+ErrUnknownCommand is returned for unknown comands.
+</p>
+</div>
+<h2 id="AcquireBufferedWriter">func AcquireBufferedWriter</h2>
+<div>
+<pre>func AcquireBufferedWriter(w io.Writer) (bw *bufio.Writer)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="AppendUint">func AppendUint</h2>
+<div>
+<pre>func AppendUint(dst []byte, n int64) []byte
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ParseRange">func ParseRange</h2>
+<div>
+<pre>func ParseRange(src []byte) (int64, int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ParseUint">func ParseUint</h2>
+<div>
+<pre>func ParseUint(src []byte) (i int64)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ReleaseBufferedWriter">func ReleaseBufferedWriter</h2>
+<div>
+<pre>func ReleaseBufferedWriter(bw *bufio.Writer)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Article">type Article</h2>
+<div>
+<pre>type Article struct {
+	MessageId	[]byte
+	Group		[]byte
+	Number		int64
+	HasId		bool
+	HasNum		bool
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ArticleCaps">type ArticleCaps</h2>
+<div>
+<pre>type ArticleCaps interface {
+	StatArticle(a *Article) bool
+	GetArticle(a *Article, head, body bool) func(w *DotWriter)
+	WriteOverview(ar *ArticleRange) func(w IOverview)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ArticleRange">type ArticleRange</h2>
+<div>
+<pre>type ArticleRange struct {
+	Article
+	LastNumber	int64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotReader">type DotReader</h2>
+<div>
+<pre>type DotReader struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotReader.Consume">func (*DotReader) Consume</h2>
+<div>
+<pre>func (d *DotReader) Consume()
+</pre>
+<p>
+Consumes until end.
+</p>
+</div>
+<h2 id="DotReader.Read">func (*DotReader) Read</h2>
+<div>
+<pre>func (d *DotReader) Read(b []byte) (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotReader.Release">func (*DotReader) Release</h2>
+<div>
+<pre>func (r *DotReader) Release()
+</pre>
+<p>
+func AcquireDotReader() *DotReader {
+</p>
+<pre>return pool_DotReader.Get().(*DotReader)
+</pre>
+<p>
+}
+</p>
+</div>
+<h2 id="DotWriter">type DotWriter</h2>
+<div>
+<pre>type DotWriter struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+A io.Writer-Wrapper, that enables dot-line ended content to be written.
+After the final &#34;.\r\n&#34;, any further content is discarded. The final &#34;.\r\n&#34; is
+addedd, if the content didn&#39;t contain any.
+</p>
+</div>
+<h2 id="AcquireDotWriter">func AcquireDotWriter</h2>
+<div>
+<pre>func AcquireDotWriter() *DotWriter
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotWriter.Close">func (*DotWriter) Close</h2>
+<div>
+<pre>func (w *DotWriter) Close() (e error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotWriter.Release">func (*DotWriter) Release</h2>
+<div>
+<pre>func (w *DotWriter) Release()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotWriter.Reset">func (*DotWriter) Reset</h2>
+<div>
+<pre>func (w *DotWriter) Reset(wr io.Writer)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="DotWriter.Write">func (*DotWriter) Write</h2>
+<div>
+<pre>func (w *DotWriter) Write(buf []byte) (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Group">type Group</h2>
+<div>
+<pre>type Group struct {
+	Group	[]byte
+	Number	int64
+	Low	int64
+	High	int64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupCaps">type GroupCaps</h2>
+<div>
+<pre>type GroupCaps interface {
+	GetGroup(g *Group) bool
+	ListGroup(g *Group, w *DotWriter, first, last int64)
+	CursorMoveGroup(g *Group, i int64, backward bool, id_buf []byte) (ni int64, id []byte, ok bool)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="GroupListingCaps">type GroupListingCaps</h2>
+<div>
+<pre>type GroupListingCaps interface {
+	// Performs a List-Active action.
+	// the argument &#39;wm&#39; may be nil.
+	ListGroups(wm *WildMat, ila IListActive) bool
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Handler">type Handler</h2>
+<div>
+<pre>type Handler struct {
+	GroupCaps
+	ArticleCaps
+	PostingCaps
+	GroupListingCaps
+	LoginCaps
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Handler.ServeConn">func (*Handler) ServeConn</h2>
+<div>
+<pre>func (h *Handler) ServeConn(conn io.ReadWriteCloser) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HeadBodyWriter">type HeadBodyWriter</h2>
+<div>
+<pre>type HeadBodyWriter struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+A Writer for postings that consist of a Head and a Body.
+</p>
+<p>
+Here is an example, of what kind of message will be split into Head and Body:
+</p>
+<pre>Subject: This is the head
+Message-ID: Blubb blubb
+From: Hugo Meyer &lt;h.meyer@example.org&gt;
+
+This is the 1. line of the Body.
+This is the 2. line of the Body.
+...
+This is the last line of the Body.
+. (trailing &lt;CRLF&gt;.&lt;CRLF&gt;)
+</pre>
+</div>
+<h2 id="AcquireHeadBodyWriter">func AcquireHeadBodyWriter</h2>
+<div>
+<pre>func AcquireHeadBodyWriter() *HeadBodyWriter
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HeadBodyWriter.Release">func (*HeadBodyWriter) Release</h2>
+<div>
+<pre>func (w *HeadBodyWriter) Release()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HeadBodyWriter.Reset">func (*HeadBodyWriter) Reset</h2>
+<div>
+<pre>func (w *HeadBodyWriter) Reset(head, body io.Writer)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="HeadBodyWriter.Write">func (*HeadBodyWriter) Write</h2>
+<div>
+<pre>func (w *HeadBodyWriter) Write(buf []byte) (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="IListActive">type IListActive</h2>
+<div>
+<pre>type IListActive interface {
+	GetListActiveMode() ListActiveMode
+
+	// This function may be used if, and only if GetListActiveMode() returns LAM_Active
+	WriteActive(group []byte, high, low int64, status byte) error
+
+	// This function may be used if, and only if GetListActiveMode() returns LAM_Newsgroups
+	WriteNewsgroups(group []byte, description []byte) error
+
+	WriteFullInfo(group []byte, high, low int64, status byte, description []byte) error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="IOverview">type IOverview</h2>
+<div>
+<pre>type IOverview interface {
+	WriteEntry(num int64, subject, from, date, msgId, refs []byte, lng, lines int64) error
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActive">type ListActive</h2>
+<div>
+<pre>type ListActive struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActive.GetListActiveMode">func (*ListActive) GetListActiveMode</h2>
+<div>
+<pre>func (ov *ListActive) GetListActiveMode() ListActiveMode
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActive.WriteActive">func (*ListActive) WriteActive</h2>
+<div>
+<pre>func (ov *ListActive) WriteActive(group []byte, high, low int64, status byte) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActive.WriteFullInfo">func (*ListActive) WriteFullInfo</h2>
+<div>
+<pre>func (ov *ListActive) WriteFullInfo(group []byte, high, low int64, status byte, description []byte) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActive.WriteNewsgroups">func (*ListActive) WriteNewsgroups</h2>
+<div>
+<pre>func (ov *ListActive) WriteNewsgroups(group []byte, description []byte) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ListActiveMode">type ListActiveMode</h2>
+<div>
+<pre>type ListActiveMode int
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="LoginCaps">type LoginCaps</h2>
+<div>
+<pre>type LoginCaps interface {
+	// This Method SHOULD return true, if authentication has already occurred.
+	AuthinfoDone(h *Handler) bool
+
+	// Checks a privilege. Returns true if it is allowed.
+	AuthinfoCheckPrivilege(p LoginPriv, h *Handler) bool
+
+	// This Method returns true, if the combination of username is accepted without password.
+	// The method can optionally return a new Handler object in place of the old one.
+	AuthinfoUserOny(user []byte, oldh *Handler) (bool, *Handler)
+
+	// This Method returns true, if the combination of username and password is accepted.
+	AuthinfoUserPass(user, password []byte, oldh *Handler) (bool, *Handler)
+}
+</pre>
+<p>
+NNTP Authentication.
+Documented outside RFC 3977 --&gt; RFC 4643
+</p>
+</div>
+<h2 id="LoginPriv">type LoginPriv</h2>
+<div>
+<pre>type LoginPriv uint
+</pre>
+<p>
+Privilege for a user.
+</p>
+</div>
+<h3>Constants</h3>
+<div>
+<pre>const (
+	LoginPriv_Post LoginPriv = iota
+)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="NNTPError">type NNTPError</h2>
+<div>
+<pre>type NNTPError struct {
+	Code	int
+	Msg	string
+}
+</pre>
+<p>
+An NNTPError is a coded NNTP error message.
+</p>
+</div>
+<h2 id="Overview">type Overview</h2>
+<div>
+<pre>type Overview struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Overview.WriteEntry">func (*Overview) WriteEntry</h2>
+<div>
+<pre>func (ov *Overview) WriteEntry(num int64, subject, from, date, msgId, refs []byte, lng, lines int64) error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="PostingCaps">type PostingCaps</h2>
+<div>
+<pre>type PostingCaps interface {
+	CheckPostId(id []byte) (wanted bool, possible bool)
+	CheckPost() (possible bool)
+	PerformPost(id []byte, r *DotReader) (rejected bool, failed bool)
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader">type Reader</h2>
+<div>
+<pre>type Reader struct {
+	// contains filtered or unexported fields
+}
+</pre>
+<p>
+A reader.
+</p>
+</div>
+<h2 id="AcquireReader">func AcquireReader</h2>
+<div>
+<pre>func AcquireReader() *Reader
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader.DotReader">func (*Reader) DotReader</h2>
+<div>
+<pre>func (r *Reader) DotReader() (d *DotReader)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader.Init">func (*Reader) Init</h2>
+<div>
+<pre>func (r *Reader) Init(rdr io.Reader) *Reader
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader.Read">func (*Reader) Read</h2>
+<div>
+<pre>func (r *Reader) Read(b []byte) (int, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader.ReadLineB">func (*Reader) ReadLineB</h2>
+<div>
+<pre>func (r *Reader) ReadLineB(ext []byte) ([]byte, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="Reader.Release">func (*Reader) Release</h2>
+<div>
+<pre>func (r *Reader) Release()
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMat">type WildMat</h2>
+<div>
+<pre>type WildMat struct {
+	RuleSets []*WildMatRuleSet
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ParseWildMat">func ParseWildMat</h2>
+<div>
+<pre>func ParseWildMat(wm string) *WildMat
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="ParseWildMatBinary">func ParseWildMatBinary</h2>
+<div>
+<pre>func ParseWildMatBinary(wm []byte) *WildMat
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMat.Compile">func (*WildMat) Compile</h2>
+<div>
+<pre>func (wmrs *WildMat) Compile() error
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMat.Match">func (*WildMat) Match</h2>
+<div>
+<pre>func (wmrs *WildMat) Match(s []byte) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMat.MatchString">func (*WildMat) MatchString</h2>
+<div>
+<pre>func (wmrs *WildMat) MatchString(s string) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMat.String">func (*WildMat) String</h2>
+<div>
+<pre>func (wmrs *WildMat) String() string
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMatRuleSet">type WildMatRuleSet</h2>
+<div>
+<pre>type WildMatRuleSet struct {
+	Positive	[]string
+	Negative	[]string
+	PR		*regexp.Regexp
+	NR		*regexp.Regexp
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMatRuleSet.Compile">func (*WildMatRuleSet) Compile</h2>
+<div>
+<pre>func (wmrs *WildMatRuleSet) Compile() (e error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMatRuleSet.Match">func (*WildMatRuleSet) Match</h2>
+<div>
+<pre>func (wmrs *WildMatRuleSet) Match(s []byte) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="WildMatRuleSet.MatchString">func (*WildMatRuleSet) MatchString</h2>
+<div>
+<pre>func (wmrs *WildMatRuleSet) MatchString(s string) bool
+</pre>
+<p>
+-</p>
+</div>
+<h2>Dependencies</h2><ul>
+<li><code>import "bufio"<code></li><li><code>import "bytes"<code></li><li><code>import "fmt"<code></li><li><code>import "io"<code></li><li><code>import "io/ioutil"<code></li><li><code>import "math"<code></li><li><code>import "regexp"<code></li><li><code>import "strings"<code></li><li><code>import "sync"<code></li><li><code>import "time"<code></li>
+{% include_relative list.html %}
