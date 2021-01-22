@@ -1,0 +1,1 @@
+Package leveldb provides implementation of LevelDB key/value database.
