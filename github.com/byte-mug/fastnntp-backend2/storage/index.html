@@ -45,6 +45,12 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 </ul></li>
 <li><a href="#Releaser">type Releaser</a><br><ul>
 </ul></li>
+<li><a href="#RiElement">type RiElement</a><br><ul>
+</ul></li>
+<li><a href="#RiHistory">type RiHistory</a><br><ul>
+</ul></li>
+<li><a href="#RiMethod">type RiMethod</a><br><ul>
+</ul></li>
 <li><a href="#SMFlags">type SMFlags</a><br><ul>
 </ul></li>
 <li><a href="#SMLevel">type SMLevel</a><br><ul>
@@ -240,6 +246,53 @@ Maps message-ids to storage tokens.
 </pre>
 <p>
 -</p>
+</div>
+<h2 id="RiElement">type RiElement</h2>
+<div>
+<pre>type RiElement struct {
+	Group	[]byte
+	Num	int64
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RiHistory">type RiHistory</h2>
+<div>
+<pre>type RiHistory struct {
+	// IF Group != nil THEN expire a group.
+	Group	[]byte
+	Num	int64
+
+	// IF MessageID != nil THEN expire an article.
+	MessageId	[]byte
+}
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RiMethod">type RiMethod</h2>
+<div>
+<pre>type RiMethod interface {
+	// Called for the first group/number-pair associated to the article
+	RiWrite(msgid []byte, md *Article_MD, rie *RiElement) (err error)
+
+	// Called for the remaining group/number-pair associated to the article
+	RiWriteMore(msgid []byte, md *Article_MD, rie *RiElement) (err error)
+
+	// Performs a reverse index lookup: message-id to the first group/number pair.
+	RiLookup(msgid []byte, rie *RiElement) (rel Releaser, err error)
+
+	// Query Expired articles. SHOULD return message-ids after their group/number counterparts.
+	RiQueryExpired(ow *time.Time, rih *RiHistory) (cur Cursor, err error)
+
+	// Expires an article using the message-id.
+	RiExpire(msgid []byte) (err error)
+}
+</pre>
+<p>
+Reverse Index. Maps message-ids to group/number-pairs.
+</p>
 </div>
 <h2 id="SMFlags">type SMFlags</h2>
 <div>
