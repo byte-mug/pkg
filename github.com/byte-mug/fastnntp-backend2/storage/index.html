@@ -15,6 +15,8 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 </div>
 <h2>Index</h2>
 <ul><li><a href="#pkg-Variables">Variables</a></li><li><a href="#Bzero">	func Bzero(bs []byte)</a></li>
+<li><a href="#RegisterHisLoader">	func RegisterHisLoader(name string, ldr CfgHisLoader)</a></li>
+<li><a href="#RegisterOverviewLoader">	func RegisterOverviewLoader(name string, ldr CfgOverviewLoader)</a></li>
 <li><a href="#RegisterStorageLoader">	func RegisterStorageLoader(name string, ldr CfgStorageLoader)</a></li>
 <li><a href="#Article_MD">type Article_MD</a><br><ul>
 </ul></li>
@@ -23,6 +25,13 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 <li><a href="#Article_W">type Article_W</a><br><ul>
 </ul></li>
 <li><a href="#CfgBaseInfo">type CfgBaseInfo</a><br><ul>
+</ul></li>
+<li><a href="#CfgHisLoader">type CfgHisLoader</a><br><ul>
+</ul></li>
+<li><a href="#CfgMaster">type CfgMaster</a><br><ul>
+<li><a href="#CfgMaster.BaseInfo">	func (cfg *CfgMaster) BaseInfo() *CfgBaseInfo</a></li>
+</ul></li>
+<li><a href="#CfgOverviewLoader">type CfgOverviewLoader</a><br><ul>
 </ul></li>
 <li><a href="#CfgStorage">type CfgStorage</a><br><ul>
 </ul></li>
@@ -37,11 +46,13 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 <li><a href="#GroupMethod">type GroupMethod</a><br><ul>
 </ul></li>
 <li><a href="#HisMethod">type HisMethod</a><br><ul>
+<li><a href="#OpenHisMethod">	func OpenHisMethod(cfg *CfgMaster) (HisMethod, error)</a></li>
 </ul></li>
 <li><a href="#OverviewElement">type OverviewElement</a><br><ul>
 <li><a href="#OverviewElement.Debug">	func (ove *OverviewElement) Debug() string</a></li>
 </ul></li>
 <li><a href="#OverviewMethod">type OverviewMethod</a><br><ul>
+<li><a href="#OpenOverviewMethod">	func OpenOverviewMethod(cfg *CfgMaster) (OverviewMethod, error)</a></li>
 </ul></li>
 <li><a href="#Releaser">type Releaser</a><br><ul>
 </ul></li>
@@ -78,6 +89,20 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 <h2 id="Bzero">func Bzero</h2>
 <div>
 <pre>func Bzero(bs []byte)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RegisterHisLoader">func RegisterHisLoader</h2>
+<div>
+<pre>func RegisterHisLoader(name string, ldr CfgHisLoader)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="RegisterOverviewLoader">func RegisterOverviewLoader</h2>
+<div>
+<pre>func RegisterOverviewLoader(name string, ldr CfgOverviewLoader)
 </pre>
 <p>
 -</p>
@@ -128,6 +153,39 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 <p>
 -</p>
 </div>
+<h2 id="CfgHisLoader">type CfgHisLoader</h2>
+<div>
+<pre>type CfgHisLoader func(cfg *CfgMaster) (HisMethod, error)
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgMaster">type CfgMaster</h2>
+<div>
+<pre>type CfgMaster struct {
+	OvMethod	string	`inn:&#34;$ovmethod&#34;`
+	HisMethod	string	`inn:&#34;$hismethod&#34;`
+	Spool		string	`inn:&#34;$pathspool&#34;`
+}
+</pre>
+<p>
+General-Config.
+</p>
+</div>
+<h2 id="CfgMaster.BaseInfo">func (*CfgMaster) BaseInfo</h2>
+<div>
+<pre>func (cfg *CfgMaster) BaseInfo() *CfgBaseInfo
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="CfgOverviewLoader">type CfgOverviewLoader</h2>
+<div>
+<pre>type CfgOverviewLoader func(cfg *CfgMaster) (OverviewMethod, error)
+</pre>
+<p>
+-</p>
+</div>
 <h2 id="CfgStorage">type CfgStorage</h2>
 <div>
 <pre>type CfgStorage struct {
@@ -135,7 +193,8 @@ NOTE: All interfaces are WIP. Expect breaking changes.
 }
 </pre>
 <p>
--</p>
+Storage-Config.
+</p>
 </div>
 <h2 id="CfgStorageLoader">type CfgStorageLoader</h2>
 <div>
@@ -202,6 +261,13 @@ Inspired by INN&#39;s HIS(history) database.
 Maps message-ids to storage tokens.
 </p>
 </div>
+<h2 id="OpenHisMethod">func OpenHisMethod</h2>
+<div>
+<pre>func OpenHisMethod(cfg *CfgMaster) (HisMethod, error)
+</pre>
+<p>
+-</p>
+</div>
 <h2 id="OverviewElement">type OverviewElement</h2>
 <div>
 <pre>type OverviewElement struct {
@@ -234,6 +300,13 @@ Maps message-ids to storage tokens.
 	// Initializes a group in the overview-database.
 	InitGroup(grp []byte) (err error)
 }
+</pre>
+<p>
+-</p>
+</div>
+<h2 id="OpenOverviewMethod">func OpenOverviewMethod</h2>
+<div>
+<pre>func OpenOverviewMethod(cfg *CfgMaster) (OverviewMethod, error)
 </pre>
 <p>
 -</p>
